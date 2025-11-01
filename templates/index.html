@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}HostelLink - Find Your Perfect Student Hostel{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center text-white">
+                <h1 class="display-4 fw-bold mb-3">Find Your Perfect Hostel</h1>
+                <p class="lead mb-4">Discover comfortable and affordable student accommodation near your university</p>
+
+
+            <!-- Search Bar -->
+            <div class="search-box bg-white p-4 rounded shadow">
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <input type="text" id="searchLocation" class="form-control form-control-lg" placeholder="Enter city or university name...">
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-primary btn-lg w-100" onclick="searchHostels()">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</section>
+
+<!-- Filter Section -->
+
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-3">
+                <label class="form-label mb-1">Price Range</label>
+                <select class="form-select" id="priceFilter" onchange="filterHostels()">
+                    <option value="">All Prices</option>
+                    <option value="0-200">Under $200</option>
+                    <option value="200-400">$200 - $400</option>
+                    <option value="400-600">$400 - $600</option>
+                    <option value="600+">$600+</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label mb-1">Location</label>
+                <select class="form-select" id="locationFilter" onchange="filterHostels()">
+                    <option value="">All Locations</option>
+                    <option value="boston">Boston</option>
+                    <option value="cambridge">Cambridge</option>
+                    <option value="new-york">New York</option>
+                    <option value="philadelphia">Philadelphia</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label mb-1">Room Type</label>
+                <select class="form-select" id="roomFilter" onchange="filterHostels()">
+                    <option value="">All Types</option>
+                    <option value="single">Single Room</option>
+                    <option value="shared">Shared Room</option>
+                    <option value="suite">Suite</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
+                    <i class="bi bi-x-circle"></i> Clear Filters
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hostel Listings -->
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4">Available Hostels</h2>
+
+
+    <div class="row g-4" id="hostelListings">
+        <!-- Hostel Card 1 -->
+        <div class="col-md-6 col-lg-4 hostel-card" data-price="350" data-location="boston" data-room="single">
+            <div class="card h-100 shadow-sm hover-card">
+                <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600&h=400&fit=crop" class="card-img-top" alt="Hostel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Sunrise Student Lodge</h5>
+                        <span class="badge bg-success">Available</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-geo-alt-fill text-primary"></i> Boston, MA
+                    </p>
+                    <p class="card-text text-muted small">Modern hostel with Wi-Fi, study areas, and 24/7 security near Boston University.</p>
+                    <div class="amenities mb-3">
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-shield-check"></i> Security</span>
+                        <span class="badge bg-light text-dark"><i class="bi bi-snow"></i> AC</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 text-primary mb-0">$350</span>
+                            <small class="text-muted">/month</small>
+                        </div>
+                        <a href="/hostel/1" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hostel Card 2 -->
+        <div class="col-md-6 col-lg-4 hostel-card" data-price="280" data-location="cambridge" data-room="shared">
+            <div class="card h-100 shadow-sm hover-card">
+                <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop" class="card-img-top" alt="Hostel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">University Heights</h5>
+                        <span class="badge bg-success">Available</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-geo-alt-fill text-primary"></i> Cambridge, MA
+                    </p>
+                    <p class="card-text text-muted small">Affordable shared accommodation perfect for MIT and Harvard students.</p>
+                    <div class="amenities mb-3">
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-bicycle"></i> Parking</span>
+                        <span class="badge bg-light text-dark"><i class="bi bi-cup-hot"></i> Kitchen</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 text-primary mb-0">$280</span>
+                            <small class="text-muted">/month</small>
+                        </div>
+                        <a href="/hostel/2" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hostel Card 3 -->
+        <div class="col-md-6 col-lg-4 hostel-card" data-price="450" data-location="new-york" data-room="single">
+            <div class="card h-100 shadow-sm hover-card">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop" class="card-img-top" alt="Hostel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Manhattan Student Hub</h5>
+                        <span class="badge bg-warning text-dark">Limited</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-geo-alt-fill text-primary"></i> New York, NY
+                    </p>
+                    <p class="card-text text-muted small">Premium accommodation in the heart of Manhattan with modern amenities.</p>
+                    <div class="amenities mb-3">
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-shield-check"></i> Security</span>
+                        <span class="badge bg-light text-dark"><i class="bi bi-building"></i> Gym</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 text-primary mb-0">$450</span>
+                            <small class="text-muted">/month</small>
+                        </div>
+                        <a href="/hostel/3" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hostel Card 4 -->
+        <div class="col-md-6 col-lg-4 hostel-card" data-price="320" data-location="boston" data-room="shared">
+            <div class="card h-100 shadow-sm hover-card">
+                <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop" class="card-img-top" alt="Hostel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Fenway Residence</h5>
+                        <span class="badge bg-success">Available</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-geo-alt-fill text-primary"></i> Boston, MA
+                    </p>
+                    <p class="card-text text-muted small">Cozy hostel near Fenway with easy access to public transportation.</p>
+                    <div class="amenities mb-3">
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-tv"></i> Lounge</span>
+                        <span class="badge bg-light text-dark"><i class="bi bi-water"></i> Laundry</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 text-primary mb-0">$320</span>
+                            <small class="text-muted">/month</small>
+                        </div>
+                        <a href="/hostel/4" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hostel Card 5 -->
+        <div class="col-md-6 col-lg-4 hostel-card" data-price="550" data-location="philadelphia" data-room="suite">
+            <div class="card h-100 shadow-sm hover-card">
+                <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=600&h=400&fit=crop" class="card-img-top" alt="Hostel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Liberty Plaza Suites</h5>
+                        <span class="badge bg-success">Available</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-geo-alt-fill text-primary"></i> Philadelphia, PA
+                    </p>
+                    <p class="card-text text-muted small">Luxurious suite-style rooms perfect for graduate students and professionals.</p>
+                    <div class="amenities mb-3">
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-building"></i> Gym</span>
+                        <span class="badge bg-light text-dark"><i class="bi bi-cup-hot"></i> Kitchen</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 text-primary mb-0">$550</span>
+                            <small class="text-muted">/month</small>
+                        </div>
+                        <a href="/hostel/5" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hostel Card 6 -->
+        <div class="col-md-6 col-lg-4 hostel-card" data-price="390" data-location="cambridge" data-room="single">
+            <div class="card h-100 shadow-sm hover-card">
+                <img src="https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=600&h=400&fit=crop" class="card-img-top" alt="Hostel">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Tech Square Living</h5>
+                        <span class="badge bg-success">Available</span>
+                    </div>
+                    <p class="text-muted mb-2">
+                        <i class="bi bi-geo-alt-fill text-primary"></i> Cambridge, MA
+                    </p>
+                    <p class="card-text text-muted small">Modern single rooms with private bathrooms near MIT campus.</p>
+                    <div class="amenities mb-3">
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
+                        <span class="badge bg-light text-dark me-1"><i class="bi bi-shield-check"></i> Security</span>
+                        <span class="badge bg-light text-dark"><i class="bi bi-bicycle"></i> Parking</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 text-primary mb-0">$390</span>
+                            <small class="text-muted">/month</small>
+                        </div>
+                        <a href="/hostel/6" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div id="noResults" class="text-center py-5 d-none">
+        <i class="bi bi-search text-muted" style="font-size: 3rem;"></i>
+        <h4 class="mt-3">No hostels found</h4>
+        <p class="text-muted">Try adjusting your filters or search criteria</p>
+    </div>
+</div>
+
+
+</section>
+
+<!-- Features Section -->
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose HostelLink?</h2>
+        <div class="row g-4">
+            <div class="col-md-4 text-center">
+                <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <h5>Verified Listings</h5>
+                <p class="text-muted">All hostels are verified and approved for student safety</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+                <h5>Affordable Prices</h5>
+                <p class="text-muted">Find budget-friendly accommodation that fits your needs</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3">
+                    <i class="bi bi-geo-alt"></i>
+                </div>
+                <h5>Near Universities</h5>
+                <p class="text-muted">Conveniently located near major universities and campuses</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

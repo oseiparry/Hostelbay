@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile - HostelLink{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h5 class="mb-0">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </h5>
+            <button class="btn btn-sm d-lg-none" onclick="toggleSidebar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+
+    <nav class="sidebar-nav">
+        <a href="/dashboard" class="sidebar-link">
+            <i class="bi bi-house-door"></i> Home
+        </a>
+        <a href="/add-hostel" class="sidebar-link">
+            <i class="bi bi-plus-circle"></i> Add Hostel
+        </a>
+        <a href="/dashboard" class="sidebar-link">
+            <i class="bi bi-list-ul"></i> My Listings
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="bi bi-chat-dots"></i> Messages
+            <span class="badge bg-primary ms-auto">3</span>
+        </a>
+        <a href="/profile" class="sidebar-link active">
+            <i class="bi bi-person"></i> Profile
+        </a>
+        <a href="#" class="sidebar-link text-danger" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="dashboard-content">
+    <!-- Mobile Toggle Button -->
+    <button class="btn btn-primary d-lg-none mb-3" onclick="toggleSidebar()">
+        <i class="bi bi-list"></i> Menu
+    </button>
+
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">My Profile</h2>
+        <p class="text-muted mb-0">Manage your account information and settings</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Profile Card -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="position-relative d-inline-block mb-3">
+                        <img src="https://ui-avatars.com/api/?name=John+Smith&size=120&background=0A74DA&color=fff" class="rounded-circle" alt="Profile">
+                        <button class="btn btn-sm btn-primary rounded-circle position-absolute bottom-0 end-0" title="Change photo">
+                            <i class="bi bi-camera"></i>
+                        </button>
+                    </div>
+                    <h4 class="fw-bold mb-1" id="profileName">John Smith</h4>
+                    <p class="text-muted mb-3" id="profileEmail">john.smith@email.com</p>
+                    <span class="badge bg-primary px-3 py-2" id="profileRole">Hostel Manager</span>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-start">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Member Since</span>
+                            <span class="fw-semibold">Sept 2025</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Total Listings</span>
+                            <span class="fw-semibold">4</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Rating</span>
+                            <span class="fw-semibold">
+                                <i class="bi bi-star-fill text-warning"></i> 4.8
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Information -->
+        <div class="col-lg-8">
+            <!-- Personal Information -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-person-circle"></i> Personal Information</h5>
+                    <button class="btn btn-sm btn-outline-primary" onclick="toggleEdit('personalInfo')">
+                        <i class="bi bi-pencil"></i> Edit
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form id="personalInfoForm" onsubmit="handleUpdateProfile(event)">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" value="John" disabled id="firstName">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" value="Smith" disabled id="lastName">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" value="john.smith@email.com" disabled id="emailAddress">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" value="+1 (555) 123-4567" disabled id="phoneNumber">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-control" rows="3" disabled id="bio">Experienced hostel manager with 5+ years in student accommodation. Committed to providing safe, comfortable, and affordable housing for students.</textarea>
+                            </div>
+                        </div>
+                        <div class="mt-3 d-none" id="personalInfoButtons">
+                            <button type="submit" class="btn btn-primary me-2">Save Changes</button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelEdit('personalInfo')">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-shield-lock"></i> Change Password</h5>
+                </div>
+                <div class="card-body">
+                    <form id="passwordForm" onsubmit="handleChangePassword(event)">
+                        <div class="mb-3">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                            <small class="text-muted">Minimum 8 characters</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmNewPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-bell"></i> Notification Settings</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                        <label class="form-check-label" for="emailNotifications">
+                            <strong>Email Notifications</strong>
+                            <p class="text-muted small mb-0">Receive updates about your listings and inquiries</p>
+                        </label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="smsNotifications">
+                        <label class="form-check-label" for="smsNotifications">
+                            <strong>SMS Notifications</strong>
+                            <p class="text-muted small mb-0">Get text alerts for urgent matters</p>
+                        </label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="marketingEmails" checked>
+                        <label class="form-check-label" for="marketingEmails">
+                            <strong>Marketing Emails</strong>
+                            <p class="text-muted small mb-0">Receive news, tips, and special offers</p>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveNotificationSettings()">Save Preferences</button>
+                </div>
+            </div>
+
+            <!-- Account Actions -->
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 text-danger"><i class="bi bi-exclamation-triangle"></i> Danger Zone</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Once you delete your account, there is no going back. Please be certain.</p>
+                    <button class="btn btn-outline-danger" onclick="confirmDeleteAccount()">
+                        <i class="bi bi-trash"></i> Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</div>
+
+<!-- Delete Account Confirmation Modal -->
+
+<div class="modal fade" id="deleteAccountModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-danger">Delete Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fw-bold">Are you absolutely sure?</p>
+                <p class="text-muted">This action cannot be undone. This will permanently delete your account and remove all your data from our servers.</p>
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill"></i> All your hostel listings will be removed and cannot be recovered.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Type <strong>DELETE</strong> to confirm:</label>
+                    <input type="text" class="form-control" id="deleteConfirmation" placeholder="DELETE">
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete My Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                <h4 class="mt-3 fw-bold">Changes Saved!</h4>
+                <p class="text-muted mb-0">Your profile has been updated successfully.</p>
+            </div>
+            <div class="modal-footer border-0 justify-content-center">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

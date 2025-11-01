@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard - HostelLink{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h5 class="mb-0">
+                <i class="bi bi-shield-fill"></i> Admin Panel
+            </h5>
+            <button class="btn btn-sm d-lg-none" onclick="toggleSidebar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+
+    <nav class="sidebar-nav">
+        <a href="/admin-dashboard" class="sidebar-link active">
+            <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+        <a href="#users" class="sidebar-link" onclick="showSection('users')">
+            <i class="bi bi-people"></i> Manage Users
+        </a>
+        <a href="#hostels" class="sidebar-link" onclick="showSection('hostels')">
+            <i class="bi bi-building"></i> Manage Hostels
+        </a>
+        <a href="#reports" class="sidebar-link" onclick="showSection('reports')">
+            <i class="bi bi-flag"></i> Reports
+            <span class="badge bg-danger ms-auto">5</span>
+        </a>
+        <a href="#settings" class="sidebar-link" onclick="showSection('settings')">
+            <i class="bi bi-gear"></i> Settings
+        </a>
+        <a href="#" class="sidebar-link text-danger" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="dashboard-content">
+    <!-- Mobile Toggle Button -->
+    <button class="btn btn-primary d-lg-none mb-3" onclick="toggleSidebar()">
+        <i class="bi bi-list"></i> Menu
+    </button>
+
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">Admin Dashboard</h2>
+        <p class="text-muted mb-0">Manage users, hostels, and system settings</p>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="stats-card bg-primary text-white">
+                <div class="stats-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div>
+                    <h3 class="mb-0">1,247</h3>
+                    <p class="mb-0 opacity-75">Total Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card bg-success text-white">
+                <div class="stats-icon">
+                    <i class="bi bi-building"></i>
+                </div>
+                <div>
+                    <h3 class="mb-0">156</h3>
+                    <p class="mb-0 opacity-75">Active Hostels</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card bg-warning text-white">
+                <div class="stats-icon">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                    <h3 class="mb-0">23</h3>
+                    <p class="mb-0 opacity-75">Pending Approval</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card bg-danger text-white">
+                <div class="stats-icon">
+                    <i class="bi bi-flag"></i>
+                </div>
+                <div>
+                    <h3 class="mb-0">5</h3>
+                    <p class="mb-0 opacity-75">Reports</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Users Section -->
+    <div id="usersSection" class="content-section">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-people"></i> Manage Users</h5>
+                <div class="input-group w-auto">
+                    <input type="text" class="form-control" placeholder="Search users...">
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1247</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=Sarah+Johnson&size=35" class="rounded-circle me-2" alt="User">
+                                        Sarah Johnson
+                                    </div>
+                                </td>
+                                <td>sarah.j@email.com</td>
+                                <td><span class="badge bg-info">Student</span></td>
+                                <td>Oct 1, 2025</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" title="View">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Suspend">
+                                        <i class="bi bi-ban"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1098</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=John+Smith&size=35" class="rounded-circle me-2" alt="User">
+                                        John Smith
+                                    </div>
+                                </td>
+                                <td>john.smith@email.com</td>
+                                <td><span class="badge bg-primary">Manager</span></td>
+                                <td>Sep 15, 2025</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" title="View">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Suspend">
+                                        <i class="bi bi-ban"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#0956</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=Mike+Chen&size=35" class="rounded-circle me-2" alt="User">
+                                        Mike Chen
+                                    </div>
+                                </td>
+                                <td>mchen@email.com</td>
+                                <td><span class="badge bg-info">Student</span></td>
+                                <td>Sep 10, 2025</td>
+                                <td><span class="badge bg-warning">Suspended</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" title="View">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success" title="Activate">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav>
+                    <ul class="pagination justify-content-end mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Hostels Section -->
+    <div id="hostelsSection" class="content-section">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-building"></i> Manage Hostels</h5>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary active">All</button>
+                    <button class="btn btn-outline-primary">Pending</button>
+                    <button class="btn btn-outline-primary">Active</button>
+                    <button class="btn btn-outline-primary">Rejected</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Hostel Name</th>
+                                <th>Manager</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#H156</td>
+                                <td>Sunrise Student Lodge</td>
+                                <td>John Smith</td>
+                                <td>Boston, MA</td>
+                                <td>$350</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary" title="View">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Deactivate">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#H134</td>
+                                <td>Liberty Plaza Suites</td>
+                                <td>John Smith</td>
+                                <td>Philadelphia, PA</td>
+                                <td>$550</td>
+                                <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-success" title="Approve">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Reject">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#H089</td>
+                                <td>Campus View Hostel</td>
+                                <td>Emily Davis</td>
+                                <td>New York, NY</td>
+                                <td>$420</td>
+                                <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-success" title="Approve">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" title="Reject">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Section -->
+    <div id="reportsSection" class="content-section d-none">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-flag"></i> User Reports</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Inappropriate Listing Content</h6>
+                                <p class="mb-1 text-muted small">Reported by: Sarah Johnson</p>
+                                <p class="mb-0 text-muted small">Hostel: Downtown Student Lodge</p>
+                            </div>
+                            <div>
+                                <span class="badge bg-danger">New</span>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-primary">Review</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Spam/Scam Listing</h6>
+                                <p class="mb-1 text-muted small">Reported by: Mike Chen</p>
+                                <p class="mb-0 text-muted small">Hostel: Budget Stay NYC</p>
+                            </div>
+                            <div>
+                                <span class="badge bg-danger">New</span>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-primary">Review</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div id="settingsSection" class="content-section d-none">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-gear"></i> System Settings</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <h6 class="fw-bold mb-3">General Settings</h6>
+                    <div class="mb-3">
+                        <label class="form-label">Site Name</label>
+                        <input type="text" class="form-control" value="HostelLink">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Support Email</label>
+                        <input type="email" class="form-control" value="support@hostellink.com">
+                    </div>
+                    <div class="mb-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="maintenanceMode">
+                            <label class="form-check-label" for="maintenanceMode">
+                                Maintenance Mode
+                            </label>
+                        </div>
+                    </div>
+                    <h6 class="fw-bold mb-3">Approval Settings</h6>
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="autoApprove" checked>
+                            <label class="form-check-label" for="autoApprove">
+                                Auto-approve hostel listings
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manager Dashboard - HostelLink{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h5 class="mb-0">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </h5>
+            <button class="btn btn-sm d-lg-none" onclick="toggleSidebar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="/dashboard" class="sidebar-link active">
+                <i class="bi bi-house-door"></i> Home
+            </a>
+            <a href="/add_hostel" class="sidebar-link">
+                <i class="bi bi-plus-circle"></i> Add Hostel
+            </a>
+            <a href="/dashboard" class="sidebar-link">
+                <i class="bi bi-list-ul"></i> My Listings
+            </a>
+            <a href="#" class="sidebar-link">
+                <i class="bi bi-chat-dots"></i> Messages
+                <span class="badge bg-primary ms-auto">3</span>
+            </a>
+            <a href="/profile" class="sidebar-link">
+                <i class="bi bi-person"></i> Profile
+            </a>
+            <a href="#" class="sidebar-link text-danger" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <!-- Mobile Toggle Button -->
+        <button class="btn btn-primary d-lg-none mb-3" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i> Menu
+        </button>
+
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">Welcome back, <span id="managerName">John</span>!</h2>
+                <p class="text-muted mb-0">Manage your hostel listings and bookings</p>
+            </div>
+            <a href="/add_hostel" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Add New Hostel
+            </a>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="stats-card bg-primary text-white">
+                    <div class="stats-icon">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">4</h3>
+                        <p class="mb-0 opacity-75">Total Listings</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card bg-success text-white">
+                    <div class="stats-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">3</h3>
+                        <p class="mb-0 opacity-75">Active</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card bg-warning text-white">
+                    <div class="stats-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">1</h3>
+                        <p class="mb-0 opacity-75">Pending</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card bg-info text-white">
+                    <div class="stats-icon">
+                        <i class="bi bi-eye"></i>
+                    </div>
+                    <div>
+                        <h3 class="mb-0">1,247</h3>
+                        <p class="mb-0 opacity-75">Total Views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Inquiries -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-envelope"></i> Recent Inquiries</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Hostel</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=Sarah+Johnson&size=40" class="rounded-circle me-2" alt="Student">
+                                        <div>
+                                            <div class="fw-semibold">Sarah Johnson</div>
+                                            <small class="text-muted">sarah.j@email.com</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Sunrise Student Lodge</td>
+                                <td>Oct 3, 2025</td>
+                                <td><span class="badge bg-warning">New</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Reply</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=Mike+Chen&size=40" class="rounded-circle me-2" alt="Student">
+                                        <div>
+                                            <div class="fw-semibold">Mike Chen</div>
+                                            <small class="text-muted">mchen@email.com</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Tech Square Living</td>
+                                <td>Oct 2, 2025</td>
+                                <td><span class="badge bg-success">Replied</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Listings -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-building"></i> My Listings</h5>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary active">All</button>
+                    <button class="btn btn-outline-primary">Active</button>
+                    <button class="btn btn-outline-primary">Pending</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <!-- Listing Card 3 -->
+                    <div class="col-md-6">
+                        <div class="listing-card">
+                            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=400&h=250&fit=crop" alt="Hostel">
+                            <div class="listing-card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="fw-bold mb-0">Liberty Plaza Suites</h6>
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                </div>
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-geo-alt"></i> Philadelphia, PA
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary fw-bold">$550/month</span>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-eye"></i> 89 views
+                                    </span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="/edit-hostel/3" class="btn btn-sm btn-outline-primary flex-fill">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('Liberty Plaza Suites')">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing Card 4 -->
+                    <div class="col-md-6">
+                        <div class="listing-card">
+                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=250&fit=crop" alt="Hostel">
+                            <div class="listing-card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="fw-bold mb-0">Fenway Residence</h6>
+                                    <span class="badge bg-success">Active</span>
+                                </div>
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-geo-alt"></i> Boston, MA
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary fw-bold">$320/month</span>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-eye"></i> 549 views
+                                    </span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="/edit-hostel/4" class="btn btn-sm btn-outline-primary flex-fill">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('Fenway Residence')">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="deleteHostelName"></strong>?</p>
+                <p class="text-danger small mb-0">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deleteHostel()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} Listing Card 1 -->
+                    <div class="col-md-6">
+                        <div class="listing-card">
+                            <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=250&fit=crop" alt="Hostel">
+                            <div class="listing-card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="fw-bold mb-0">Sunrise Student Lodge</h6>
+                                    <span class="badge bg-success">Active</span>
+                                </div>
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-geo-alt"></i> Boston, MA
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary fw-bold">$350/month</span>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-eye"></i> 342 views
+                                    </span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="/edit-hostel/1" class="btn btn-sm btn-outline-primary flex-fill">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('Sunrise Student Lodge')">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing Card 2 -->
+                    <div class="col-md-6">
+                        <div class="listing-card">
+                            <img src="https://images.unsplash.com/photo-1609766857041-ed402ea8069a?w=400&h=250&fit=crop" alt="Hostel">
+                            <div class="listing-card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="fw-bold mb-0">Tech Square Living</h6>
+                                    <span class="badge bg-success">Active</span>
+                                </div>
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-geo-alt"></i> Cambridge, MA
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary fw-bold">$390/month</span>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-eye"></i> 267 views
+                                    </span>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="/edit-hostel/2" class="btn btn-sm btn-outline-primary flex-fill">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('Tech Square Living')">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--

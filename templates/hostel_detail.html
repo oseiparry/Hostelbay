@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sunrise Student Lodge - HostelLink{% endblock %}
+
+{% block content %}
+
+<!-- Hero Image Section -->
+
+<section class="hostel-hero">
+    <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=1200&h=500&fit=crop" alt="Hostel" class="w-100">
+</section>
+
+<!-- Hostel Details -->
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Title & Location -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <h1 class="display-5 fw-bold mb-2">Sunrise Student Lodge</h1>
+                            <p class="text-muted fs-5">
+                                <i class="bi bi-geo-alt-fill text-primary"></i> 
+                                123 Commonwealth Ave, Boston, MA 02215
+                            </p>
+                        </div>
+                        <span class="badge bg-success fs-6 px-3 py-2">Available</span>
+                    </div>
+
+
+                <!-- Rating & Reviews -->
+                <div class="d-flex align-items-center gap-3">
+                    <div>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-fill text-warning"></i>
+                        <i class="bi bi-star-half text-warning"></i>
+                        <span class="ms-2 fw-semibold">4.5</span>
+                    </div>
+                    <span class="text-muted">|</span>
+                    <a href="#reviews" class="text-decoration-none">127 reviews</a>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+                <h4 class="fw-bold mb-3">About This Hostel</h4>
+                <p class="text-muted">
+                    Welcome to Sunrise Student Lodge, your home away from home! Located just minutes from Boston University, 
+                    our hostel offers comfortable and affordable accommodation designed specifically for students. 
+                    Enjoy modern amenities including high-speed Wi-Fi, dedicated study areas, communal kitchen, 
+                    and 24/7 security. Our friendly staff is always ready to assist you with any needs.
+                </p>
+                <p class="text-muted">
+                    The hostel is surrounded by cafes, restaurants, and public transportation links, making it easy 
+                    to explore Boston or commute to campus. Join our vibrant community of students from around the world!
+                </p>
+            </div>
+
+            <!-- Amenities -->
+            <div class="mb-4">
+                <h4 class="fw-bold mb-3">Amenities</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-wifi text-primary"></i>
+                            <span>High-Speed WiFi</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-shield-check text-primary"></i>
+                            <span>24/7 Security</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-snow text-primary"></i>
+                            <span>Air Conditioning</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-cup-hot text-primary"></i>
+                            <span>Communal Kitchen</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-water text-primary"></i>
+                            <span>Laundry Facilities</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-book text-primary"></i>
+                            <span>Study Rooms</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-bicycle text-primary"></i>
+                            <span>Bike Parking</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="amenity-item">
+                            <i class="bi bi-tv text-primary"></i>
+                            <span>Common Lounge</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Room Types -->
+            <div class="mb-4">
+                <h4 class="fw-bold mb-3">Room Options</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="fw-bold">Single Room</h6>
+                                <p class="text-muted small mb-2">Private room with attached bathroom</p>
+                                <p class="mb-0">
+                                    <span class="h5 text-primary">$350</span>
+                                    <small class="text-muted">/month</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="fw-bold">Shared Room</h6>
+                                <p class="text-muted small mb-2">Share with 2 other students</p>
+                                <p class="mb-0">
+                                    <span class="h5 text-primary">$220</span>
+                                    <small class="text-muted">/month</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- House Rules -->
+            <div class="mb-4">
+                <h4 class="fw-bold mb-3">House Rules</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Check-in: 2:00 PM - 10:00 PM</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Check-out: 11:00 AM</li>
+                    <li class="mb-2"><i class="bi bi-x-circle text-danger me-2"></i> No smoking inside</li>
+                    <li class="mb-2"><i class="bi bi-x-circle text-danger me-2"></i> No pets allowed</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Quiet hours: 10:00 PM - 8:00 AM</li>
+                </ul>
+            </div>
+
+            <!-- Location Map -->
+            <div class="mb-4">
+                <h4 class="fw-bold mb-3">Location</h4>
+                <div class="map-placeholder bg-light rounded p-5 text-center">
+                    <i class="bi bi-geo-alt-fill text-primary" style="font-size: 3rem;"></i>
+                    <p class="text-muted mt-2">123 Commonwealth Ave, Boston, MA 02215</p>
+                    <p class="text-muted small">5 min walk to Boston University</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm sticky-top" style="top: 100px;">
+                <div class="card-body">
+                    <!-- Price -->
+                    <div class="text-center mb-4">
+                        <h2 class="text-primary mb-0">$350<small class="text-muted fs-6">/month</small></h2>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <form id="contactForm" onsubmit="handleContactManager(event)">
+                        <h5 class="fw-bold mb-3">Contact Manager</h5>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small">Your Name</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small">Your Email</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small">Phone Number</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small">Move-in Date</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small">Message</label>
+                            <textarea class="form-control" rows="3" placeholder="I'm interested in..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-2">
+                            <i class="bi bi-send"></i> Send Inquiry
+                        </button>
+                        <button type="button" class="btn btn-outline-primary w-100" onclick="callManager()">
+                            <i class="bi bi-telephone"></i> Call Manager
+                        </button>
+                    </form>
+
+                    <!-- Manager Info -->
+                    <hr class="my-4">
+                    <div class="text-center">
+                        <img src="https://ui-avatars.com/api/?name=John+Smith&size=80" class="rounded-circle mb-2" alt="Manager">
+                        <h6 class="fw-bold mb-1">John Smith</h6>
+                        <p class="text-muted small mb-2">Property Manager</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <span class="small">4.8 (45 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</section>
+
+<!-- Contact Modal -->
+
+<div class="modal fade" id="contactModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Inquiry Sent!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                <h5 class="mt-3">Your message has been sent</h5>
+                <p class="text-muted">The hostel manager will contact you shortly via email or phone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

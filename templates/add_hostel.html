@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Hostel - HostelLink{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+    <!-- Sidebar (same as dashboard) -->
+    <aside class="dashboard-sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h5 class="mb-0">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </h5>
+            <button class="btn btn-sm d-lg-none" onclick="toggleSidebar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+
+    <nav class="sidebar-nav">
+        <a href="/dashboard" class="sidebar-link">
+            <i class="bi bi-house-door"></i> Home
+        </a>
+        <a href="/add-hostel" class="sidebar-link active">
+            <i class="bi bi-plus-circle"></i> Add Hostel
+        </a>
+        <a href="/dashboard" class="sidebar-link">
+            <i class="bi bi-list-ul"></i> My Listings
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="bi bi-chat-dots"></i> Messages
+            <span class="badge bg-primary ms-auto">3</span>
+        </a>
+        <a href="/profile" class="sidebar-link">
+            <i class="bi bi-person"></i> Profile
+        </a>
+        <a href="#" class="sidebar-link text-danger" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="dashboard-content">
+    <!-- Mobile Toggle Button -->
+    <button class="btn btn-primary d-lg-none mb-3" onclick="toggleSidebar()">
+        <i class="bi bi-list"></i> Menu
+    </button>
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Add New Hostel</h2>
+            <p class="text-muted mb-0">Fill in the details to list your hostel</p>
+        </div>
+        <a href="/dashboard" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Add Hostel Form -->
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <form id="addHostelForm" onsubmit="handleAddHostel(event)">
+                <!-- Basic Information -->
+                <h5 class="fw-bold mb-3">Basic Information</h5>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-8">
+                        <label for="hostelName" class="form-label">Hostel Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="hostelName" placeholder="e.g., Sunrise Student Lodge" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="hostelPrice" class="form-label">Price per Month <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="hostelPrice" placeholder="350" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <h5 class="fw-bold mb-3">Location</h5>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-12">
+                        <label for="address" class="form-label">Street Address <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="address" placeholder="123 Commonwealth Ave" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="city" class="form-label">City <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="city" placeholder="Boston" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="state" class="form-label">State <span class="text-danger">*</span></label>
+                        <select class="form-select" id="state" required>
+                            <option value="">Select...</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="NY">New York</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="CA">California</option>
+                            <option value="TX">Texas</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="zipCode" class="form-label">ZIP Code <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="zipCode" placeholder="02215" required>
+                    </div>
+                </div>
+
+                <!-- Property Details -->
+                <h5 class="fw-bold mb-3">Property Details</h5>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label for="totalRooms" class="form-label">Total Rooms <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="totalRooms" placeholder="20" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="roomType" class="form-label">Room Type <span class="text-danger">*</span></label>
+                        <select class="form-select" id="roomType" required>
+                            <option value="">Select...</option>
+                            <option value="single">Single Room</option>
+                            <option value="shared">Shared Room</option>
+                            <option value="suite">Suite</option>
+                            <option value="mixed">Mixed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="capacity" class="form-label">Total Capacity <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="capacity" placeholder="50" required>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="description" rows="5" placeholder="Describe your hostel, amenities, location benefits, etc." required></textarea>
+                    <small class="text-muted">Minimum 100 characters</small>
+                </div>
+
+                <!-- Amenities -->
+                <h5 class="fw-bold mb-3">Amenities</h5>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="wifi" value="wifi">
+                            <label class="form-check-label" for="wifi">
+                                <i class="bi bi-wifi text-primary"></i> WiFi
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="ac" value="ac">
+                            <label class="form-check-label" for="ac">
+                                <i class="bi bi-snow text-primary"></i> Air Conditioning
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="security" value="security">
+                            <label class="form-check-label" for="security">
+                                <i class="bi bi-shield-check text-primary"></i> 24/7 Security
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="kitchen" value="kitchen">
+                            <label class="form-check-label" for="kitchen">
+                                <i class="bi bi-cup-hot text-primary"></i> Kitchen
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="laundry" value="laundry">
+                            <label class="form-check-label" for="laundry">
+                                <i class="bi bi-water text-primary"></i> Laundry
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="parking" value="parking">
+                            <label class="form-check-label" for="parking">
+                                <i class="bi bi-bicycle text-primary"></i> Parking
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gym" value="gym">
+                            <label class="form-check-label" for="gym">
+                                <i class="bi bi-building text-primary"></i> Gym
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="study" value="study">
+                            <label class="form-check-label" for="study">
+                                <i class="bi bi-book text-primary"></i> Study Room
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="lounge" value="lounge">
+                            <label class="form-check-label" for="lounge">
+                                <i class="bi bi-tv text-primary"></i> Common Lounge
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Images -->
+                <h5 class="fw-bold mb-3">Images</h5>
+                
+                <div class="mb-4">
+                    <label for="hostelImages" class="form-label">Upload Images <span class="text-danger">*</span></label>
+                    <input class="form-control" type="file" id="hostelImages" multiple accept="image/*">
+                    <small class="text-muted">Upload up to 10 images (JPG, PNG). First image will be the cover photo.</small>
+                    
+                    <!-- Image Preview Area -->
+                    <div id="imagePreview" class="mt-3 d-flex gap-2 flex-wrap"></div>
+                </div>
+
+                <!-- Contact Information -->
+                <h5 class="fw-bold mb-3">Contact Information</h5>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="contactPerson" class="form-label">Contact Person <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="contactPerson" placeholder="John Smith" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contactPhone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="contactPhone" placeholder="+1 (555) 123-4567" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="contactEmail" class="form-label">Email Address <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="contactEmail" placeholder="contact@hostel.com" required>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="d-flex gap-3 justify-content-end">
+                    <a href="/dashboard" class="btn btn-secondary">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Submit for Review
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+
+</div>
+{% endblock %}
