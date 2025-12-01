@@ -62,7 +62,7 @@
                     <i class="bi bi-people"></i>
                 </div>
                 <div>
-                    <h3 class="mb-0">1,247</h3>
+                    <h3 class="mb-0">{{total_users}}</h3>
                     <p class="mb-0 opacity-75">Total Users</p>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     <i class="bi bi-building"></i>
                 </div>
                 <div>
-                    <h3 class="mb-0">156</h3>
+                    <h3 class="mb-0">{{total_hostels}}</h3>
                     <p class="mb-0 opacity-75">Active Hostels</p>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                     <i class="bi bi-clock-history"></i>
                 </div>
                 <div>
-                    <h3 class="mb-0">23</h3>
+                    <h3 class="mb-0">{{pending_hostels}}</h3>
                     <p class="mb-0 opacity-75">Pending Approval</p>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                     <i class="bi bi-flag"></i>
                 </div>
                 <div>
-                    <h3 class="mb-0">5</h3>
+                    <h3 class="mb-0">{{total_reports}}</h3>
                     <p class="mb-0 opacity-75">Reports</p>
                 </div>
             </div>
@@ -129,18 +129,28 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for user in users %}
                             <tr>
-                                <td>#1247</td>
+                                <td>#{{user.id}}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
+                                        {% if user.profile_image %}
+                                            <img src='{{user.profile_image.url}}' class='rounded-circle me-2' width='35' height="35">
+                                        {% else %}
                                         <img src="https://ui-avatars.com/api/?name=Sarah+Johnson&size=35" class="rounded-circle me-2" alt="User">
-                                        Sarah Johnson
+                                        {% endif %}
+                                        {{user.username}}
                                     </div>
                                 </td>
-                                <td>sarah.j@email.com</td>
-                                <td><span class="badge bg-info">Student</span></td>
-                                <td>Oct 1, 2025</td>
-                                <td><span class="badge bg-success">Active</span></td>
+                                <td>{{user.email}}</td>
+                                <td><span class="badge bg-info">{{user.role|title}}</span></td>
+                                <td>{{user.date_joined|date:'M d,y'}}</td>
+                                <td>{%if user.is_active%}
+                                    <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">Suspend</span>
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <button class="btn btn-sm btn-outline-primary" title="View">
                                         <i class="bi bi-eye"></i>
@@ -150,48 +160,9 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>#1098</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name=John+Smith&size=35" class="rounded-circle me-2" alt="User">
-                                        John Smith
-                                    </div>
-                                </td>
-                                <td>john.smith@email.com</td>
-                                <td><span class="badge bg-primary">Manager</span></td>
-                                <td>Sep 15, 2025</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary" title="View">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger" title="Suspend">
-                                        <i class="bi bi-ban"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#0956</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name=Mike+Chen&size=35" class="rounded-circle me-2" alt="User">
-                                        Mike Chen
-                                    </div>
-                                </td>
-                                <td>mchen@email.com</td>
-                                <td><span class="badge bg-info">Student</span></td>
-                                <td>Sep 10, 2025</td>
-                                <td><span class="badge bg-warning">Suspended</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary" title="View">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-success" title="Activate">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            {%empty%}
+                            <tr><td colspan="7" class="text-center text-muted">No User founds</td></tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -225,7 +196,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>hostel</th>
                                 <th>Hostel Name</th>
                                 <th>Manager</th>
                                 <th>Location</th>
@@ -235,13 +206,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for hostel in hostels %}
                             <tr>
-                                <td>#H156</td>
-                                <td>Sunrise Student Lodge</td>
-                                <td>John Smith</td>
-                                <td>Boston, MA</td>
-                                <td>$350</td>
+                                <td>#{{hostel.id}}</td>
+                                <td>{{hostel.name}}</td>
+                                <td>{{hostel.manager.username}}</td>
+                                <td>{{hostes.location}}</td>
+                                <td>${{hostel.price}}</td>
+                                {%if hostel.status == 'active'%}
                                 <td><span class="badge bg-success">Active</span></td>
+                                {% elif hostel.status == 'pending' %}
+                                <td><span class="badge bg-success">Pending</span></td>   
+                                {% else %}                             
+                                <td><span class="badge bg-success">Rejected</span></td> 
+                                {% endif %}                               
                                 <td>
                                     <button class="btn btn-sm btn-outline-primary" title="View">
                                         <i class="bi bi-eye"></i>
@@ -251,38 +229,9 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>#H134</td>
-                                <td>Liberty Plaza Suites</td>
-                                <td>John Smith</td>
-                                <td>Philadelphia, PA</td>
-                                <td>$550</td>
-                                <td><span class="badge bg-warning text-dark">Pending</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-success" title="Approve">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger" title="Reject">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#H089</td>
-                                <td>Campus View Hostel</td>
-                                <td>Emily Davis</td>
-                                <td>New York, NY</td>
-                                <td>$420</td>
-                                <td><span class="badge bg-warning text-dark">Pending</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-success" title="Approve">
-                                        <i class="bi bi-check-circle"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger" title="Reject">
-                                        <i class="bi bi-x-circle"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            {%empty%}
+                            <tr><td colspan='7' class="text-center text-muted">No hostel found</td></tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

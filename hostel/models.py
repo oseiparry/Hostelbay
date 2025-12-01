@@ -1,25 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.text import slugify 
+from accounts.models import User
 
 # Create your models here.
-class User(AbstractUser):
-    USER_ROLES=[
-        ('student', 'Student'),
-        ('manager', 'Hostel Manager'),
-        ('admin', 'Admin'),
-    ]
-    role=models.CharField(max_length=20)
-    phone=models.CharField(max_length=15)
-    profile_image=models.ImageField(upload_to='profiles/', blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.username} ({self.role})'
     
 class Hostel(models.Model):
     STATUS_CHOICES=[
         ('pending','Pending'),
         ('active','Active'),
         ('rejected','Rejected'),
+    ]
+    LOCATIONS=[
+        ('abeka','Abeka'),
+        ('tesano', 'Tesano'),
+        ('lapaz','Lapaz'),
+        ('aladjo','Aladjo'),
     ]
     name=models.CharField(max_length=100)
     location=models.TextField()
@@ -30,6 +26,14 @@ class Hostel(models.Model):
     contact=models.TextField()
     status=models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     created_at=models.DateField(auto_now_add=True)
+    locationFilter=models.CharField(max_length=50, choices=LOCATIONS, default='none')
+    priceFilter=models.CharField(max_length=10, default='0.00')
+    slug=models.SlugField(unique=True, blank=True, null=True)
+
+    def save(self,*args, **kwargs):
+        if not self.slug:
+            self.slug=slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -39,22 +43,6 @@ class HostelImage(models.Model):
     image=models.ImageField(upload_to='hostel_images/')
     uploaded_at=models.DateTimeField(auto_now_add=True)
 
-class Booking(models.Model):
-    STATUS_CHOICES=[
-        ('pending','Pending'),
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected'),
-        ('cancelled', 'Cancelled'),
-      ]
-    student=models.ForeignKey(User, on_delete=models.CASCADE , limit_choices_to={'role':'student'})
-    hostel=models.ForeignKey(Hostel,  on_delete=models.CASCADE,)
-    status=models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    booked_on=models.DateTimeField(auto_now_add=True)
-    notes=models.TextField(blank=True)
-
-    def __str__(self):
-        return f'{self.student.username} {self.hostel.name}'
-    
     
 class Report(models.Model):
     name=models.ForeignKey(User, on_delete=models.CASCADE, )
