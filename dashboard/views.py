@@ -1,8 +1,6 @@
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
 from accounts.models import User
-from booking.models import Booking
-from.models import Hostel,Report,SystemSetting,Notification,HostelImage
+from.models import Hostel,Report
 from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
