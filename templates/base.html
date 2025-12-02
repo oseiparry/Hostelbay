@@ -16,6 +16,7 @@
     <link rel="stylesheet" href={% static 'css/style.css' %}> 
     
     {% block extra_css %}{% endblock %}
+    {%block extra_js%}{%endblock%}
 </head>
 <body>
     <!-- Navbar -->
@@ -116,6 +117,5 @@
     <!-- Custom JS -->
     <script src={% static 'js/main.js' %}></script>
     
-    {% block extra_js %}{% endblock %}
 </body>
 </html>

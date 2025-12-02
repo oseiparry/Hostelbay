@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from.models import Hostel,HostelImage
+from accounts.models import User
 
 # Create your views here.
 def home(request):
@@ -17,6 +18,9 @@ def edit_hostel(request):
     return render(request, 'edit_hostel.html')
 
 def hostel_details(request, slug):
+    context={
+        'user':User.objects.all()
+    }
     hostel=get_object_or_404(Hostel, slug=slug)
     return render(request, 'hostel_detail.html', {'hostel':hostel})
 

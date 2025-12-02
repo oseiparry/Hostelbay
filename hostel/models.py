@@ -18,7 +18,7 @@ class Hostel(models.Model):
         ('aladjo','Aladjo'),
     ]
     name=models.CharField(max_length=100)
-    location=models.TextField()
+    location=models.CharField(max_length=50, choices=LOCATIONS, default='none')
     manager=models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'manager'})
     capacity=models.IntegerField()
     available_rooms=models.IntegerField()
@@ -26,7 +26,6 @@ class Hostel(models.Model):
     contact=models.TextField()
     status=models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     created_at=models.DateField(auto_now_add=True)
-    locationFilter=models.CharField(max_length=50, choices=LOCATIONS, default='none')
     priceFilter=models.CharField(max_length=10, default='0.00')
     slug=models.SlugField(unique=True, blank=True, null=True)
 

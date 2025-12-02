@@ -2,9 +2,17 @@ from django.shortcuts import render
 from accounts.models import User
 from.models import Hostel,Report
 from django.contrib.auth.decorators import user_passes_test
+from booking.models import Booking
 
 # Create your views here.
+def is_manager(user):
+    return user.is_authenticated and (user.role== 'admin' or user.is_superuser)
+
+@user_passes_test(is_manager)
 def dashboard(request):
+    manager=request.user
+
+    my_hostels=Hostel.objects
     return render(request, 'dashboard.html')
 
 def is_admin(user):

@@ -18,3 +18,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.username} ({self.role})'
+    
+class Manager(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    phone=models.CharField(max_length=15)
+    whatsapp=models.CharField(max_length=20, blank=True)
+    profile_pic=models.ImageField(upload_to='profiles/', blank=True)

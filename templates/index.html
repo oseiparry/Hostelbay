@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{%block extra_js%}
+<script src="{%static 'js/hostel_filter.js'%}"></script>
+{%endblock%}
 {% block title %}HostelLink - Find Your Perfect Student Hostel{% endblock %}
 
 {% block content %}
@@ -55,10 +57,10 @@
                 <label class="form-label mb-1">Location</label>
                 <select class="form-select" id="locationFilter" onchange="filterHostels()">
                     <option value="">All Locations</option>
-                    <option value="boston">Abeka</option>
-                    <option value="cambridge">Tesano</option>
-                    <option value="new-york">Lapaz</option>
-                    <option value="philadelphia">Aladjo</option>
+                    <option value="Abeka">Abeka</option>
+                    <option value="Tesano">Tesano</option>
+                    <option value="Lapaz">Lapaz</option>
+                    <option value="Aladjo">Aladjo</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -89,7 +91,7 @@
     <div class="row g-4" id="hostelListings">
         <!-- Hostel Card  -->
          {% for hostel in hostels  %}
-        <div class="col-md-6 col-lg-4 hostel-card" data-price={{hostel.priceFilter}} data-location={{hostel.locationFilter}} data-room="shared">
+        <div class="col-md-6 col-lg-4 hostel-card" data-price={{hostel.price}} data-location={{hostel.location|lower}} data-room="shared">
             <div class="card h-100 shadow-sm hover-card">
                 {% with hostel.images.all|first as first_image %}
                     {% if first_image %}
