@@ -18,46 +18,63 @@
     {% block extra_css %}{% endblock %}
     {%block extra_js%}{%endblock%}
 </head>
+
 <body>
     <!-- Navbar -->
+     {%if user.is_authenticated%}
+        <li><a href="{% url "logout" %}"> Logout</a></li>
+    {% else %}
+        <li><a href="{% url "login" %}"> Login</a></li>
+    {% endif %}
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <i class="bi bi-house-door-fill text-primary"></i>
-                <span class="fw-bold text-primary">HostelLink</span>
+            <i class="bi bi-house-door-fill text-primary"></i>
+            <span class="fw-bold text-primary">HostelLink</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
-                    </li>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+
+                {% if user.is_authenticated %}
                     
-                    <!-- Show these if user is NOT logged in -->
-                    <li class="nav-item logged-out">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item logged-out">
-                        <a class="btn btn-primary btn-sm ms-2" href="/signup">Sign Up</a>
-                    </li>
-                    
-                    <!-- Show these if user IS logged in -->
-                    <li class="nav-item dropdown logged-in d-none">
+                    <!-- Logged in menu -->
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> <span id="userName">User</span>
+                            <i class="bi bi-person-circle"></i> {{ user.first_name|default:"User" }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
                             <li><a class="dropdown-item" href="/profile">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </li>
+
+                {% else %}
+                    
+                    <!-- Logged out menu -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary btn-sm ms-2" href="/signup">Sign Up</a>
+                    </li>
+
+                {% endif %}
+
                 </ul>
             </div>
         </div>

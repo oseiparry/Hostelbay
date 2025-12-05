@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify 
 from accounts.models import User
+import uuid
 
 # Create your models here.
     
@@ -22,7 +23,10 @@ class Hostel(models.Model):
     manager=models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'manager'})
     capacity=models.IntegerField()
     available_rooms=models.IntegerField()
-    price=models.DecimalField(max_digits=8, decimal_places=2)
+    price_for_one_in_a_room=models.DecimalField(max_digits=8, decimal_places=2, default='0.00')
+    price_for_two_in_a_room=models.DecimalField(max_digits=8, decimal_places=2, default='0.00' )
+    price_for_three_in_a_room=models.DecimalField(max_digits=8, decimal_places=2, default='0.00')
+    price_for_four_in_a_room=models.DecimalField(max_digits=8, decimal_places=2, default='0.00')
     contact=models.TextField()
     status=models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     created_at=models.DateField(auto_now_add=True)
@@ -41,5 +45,6 @@ class HostelImage(models.Model):
     hostel=models.ForeignKey(Hostel, on_delete=models.CASCADE, related_name='images')
     image=models.ImageField(upload_to='hostel_images/')
     uploaded_at=models.DateTimeField(auto_now_add=True)
+
 
     

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    {%if messages%}
+                        {%for message in messages %}
+                            {%if message.tag == 'errpr'%}
+                                <center><h4 style='color:firebrick;'>{{message}}</h4></center>
+                            {%else %}
+                                <center><h4 style='color:dodgerblue;'>{{message}}</h4></center>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    
+
+{% endblock content %}
+
+

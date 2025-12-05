@@ -17,21 +17,30 @@
                             <p class="text-muted">Login to access your account</p>
                         </div>
 
-
+            {%if messages%}
+                        {%for message in messages %}
+                            {%if message.tag == 'error'%}
+                                <center><h4 style='color:firebrick;'>{{message}}</h4></center>
+                            {%else %}
+                                <center><h4 style='color:dodgerblue;'>{{message}}</h4></center>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                     <form id="loginForm" onsubmit="handleLogin(event)" method='POST'>
+                        {% csrf_token %}    
                         <!-- Email -->
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
+                            <label for="fullName" class="form-label">Email Address</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light">
                                     <i class="bi bi-envelope"></i>
                                 </span>
                                 <input 
-                                    type="email" 
+                                    type="text" 
                                     class="form-control" 
-                                    id="email" 
-                                    name="email"
-                                    placeholder="your.email@example.com" 
+                                    id="fullName" 
+                                    placeholder="JohnDoe" 
+                                    name='username'
                                     required>
                             </div>
                         </div>
@@ -67,7 +76,7 @@
                                     Remember me
                                 </label>
                             </div>
-                            <a href="#" class="text-primary text-decoration-none small">Forgot password?</a>
+                            <a href="{% url "forgot_password" %}" class="text-primary text-decoration-none small">Forgot password?</a>
                         </div>
 
                         <!-- Submit Button -->
@@ -99,14 +108,7 @@
                 </div>
             </div>
 
-            <!-- Demo Credentials Info -->
-            <div class="alert alert-info mt-3 text-center" role="alert">
-                <small>
-                    <strong>Demo Mode:</strong><br>
-                    Student: student@demo.com / student123<br>
-                    Manager: manager@demo.com / manager123
-                </small>
-            </div>
+            
         </div>
     </div>
 </div>

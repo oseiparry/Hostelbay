@@ -136,3 +136,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
+LOGIN_URL = 'login'
+LOGOUT_URL='logout'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=465
+EMAIL_USE_SSL=True
+EMAIL_HOST_USER='oseiparry20@gmail.com'
+EMAIL_HOST_PASSWORD='btmw glzq mwhr xbwe'
+
+
