@@ -35,7 +35,7 @@
         <a href="#settings" class="sidebar-link" onclick="showSection('settings')">
             <i class="bi bi-gear"></i> Settings
         </a>
-        <a href="#" class="sidebar-link text-danger" onclick="logout()">
+        <a href="{% url "logout" %}" class="sidebar-link text-danger" onclick="logout()">
             <i class="bi bi-box-arrow-right"></i> Logout
         </a>
     </nav>
@@ -137,14 +137,14 @@
                                         {% if user.profile_image %}
                                             <img src='{{user.profile_image.url}}' class='rounded-circle me-2' width='35' height="35">
                                         {% else %}
-                                        <img src="https://ui-avatars.com/api/?name=Sarah+Johnson&size=35" class="rounded-circle me-2" alt="User">
+                                        <img src="https://ui-avatars.com/api/?name={{user.username}}=35" class="rounded-circle me-2" alt="User">
                                         {% endif %}
                                         {{user.username}}
                                     </div>
                                 </td>
                                 <td>{{user.email}}</td>
                                 <td><span class="badge bg-info">{{user.role|title}}</span></td>
-                                <td>{{user.date_joined|date:'M d,y'}}</td>
+                                <td>{{user.date_joined|date:'M d,Y'}}</td>
                                 <td>{%if user.is_active%}
                                     <span class="badge bg-success">Active</span>
                                     {% else %}
@@ -211,14 +211,14 @@
                                 <td>#{{hostel.id}}</td>
                                 <td>{{hostel.name}}</td>
                                 <td>{{hostel.manager.username}}</td>
-                                <td>{{hostes.location}}</td>
+                                <td>{{hostel.location}}</td>
                                 <td>${{hostel.price}}</td>
                                 {%if hostel.status == 'active'%}
                                 <td><span class="badge bg-success">Active</span></td>
                                 {% elif hostel.status == 'pending' %}
-                                <td><span class="badge bg-success">Pending</span></td>   
+                                <td><span class="badge bg-warning text-dark">Pending</span></td>   
                                 {% else %}                             
-                                <td><span class="badge bg-success">Rejected</span></td> 
+                                <td><span class="badge bg-danger">Rejected</span></td> 
                                 {% endif %}                               
                                 <td>
                                     <button class="btn btn-sm btn-outline-primary" title="View">

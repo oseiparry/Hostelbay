@@ -16,21 +16,6 @@
             <div class="col-lg-8 text-center text-white">
                 <h1 class="display-4 fw-bold mb-3">Find Your Perfect Hostel</h1>
                 <p class="lead mb-4">Discover comfortable and affordable student accommodation near your university</p>
-
-
-            <!-- Search Bar -->
-            <div class="search-box bg-white p-4 rounded shadow">
-                <div class="row g-3">
-                    <div class="col-md-8">
-                        <input type="text" id="searchLocation" class="form-control form-control-lg" placeholder="Enter city or university name...">
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-primary btn-lg w-100" onclick="searchHostels()">
-                            <i class="bi bi-search"></i> Search
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -45,7 +30,7 @@
         <div class="row g-3 align-items-center">
             <div class="col-md-3">
                 <label class="form-label mb-1">Price Range</label>
-                <select class="form-select" id="priceFilter" onchange="filterHostels()">
+                <label for="priceFilter"></label><select class="form-select" id="priceFilter" onchange="filterHostels()">
                     <option value="">All Prices</option>
                     <option value="0-200">Under $200</option>
                     <option value="200-400">$200 - $400</option>
@@ -55,7 +40,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label mb-1">Location</label>
-                <select class="form-select" id="locationFilter" onchange="filterHostels()">
+                <label for="locationFilter"></label><select class="form-select" id="locationFilter" onchange="filterHostels()">
                     <option value="">All Locations</option>
                     <option value="Abeka">Abeka</option>
                     <option value="Tesano">Tesano</option>
@@ -65,7 +50,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label mb-1">Room Type</label>
-                <select class="form-select" id="roomFilter" onchange="filterHostels()">
+                <label for="roomFilter"></label><select class="form-select" id="roomFilter">
                     <option value="">All Types</option>
                     <option value="single">Single Room</option>
                     <option value="shared">Shared Room</option>
@@ -73,7 +58,7 @@
                 </select>
             </div>
             <div class="col-md-3 d-flex align-items-end">
-                <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
+                <button class="btn btn-outline-secondary w-100" >
                     <i class="bi bi-x-circle"></i> Clear Filters
                 </button>
             </div>
@@ -83,58 +68,56 @@
 
 <!-- Hostel Listings -->
 
-<section class="py-5">
     <div class="container">
         <h2 class="mb-4">Available Hostels</h2>
 
 
-    <div class="row g-4" id="hostelListings">
-        <!-- Hostel Card  -->
-         {% for hostel in hostels  %}
-        <div class="col-md-6 col-lg-4 hostel-card" data-price={{hostel.price}} data-location={{hostel.location|lower}} data-room="shared">
-            <div class="card h-100 shadow-sm hover-card">
-                {% with hostel.images.all|first as first_image %}
-                    {% if first_image %}
-                        <img src='{{first_image.image.url}}' class="card-img-top" alt='{{hostel.name}}'>
-                    {% else %}
-                        <img src='{% static 'images/no-image.png'%}'calss="card_imag-top" alt='No image'>
-                    {% endif %}
-                {% endwith %}
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h5 class="card-title mb-0">{{hostel.name}}</h5>
-                        <span class="badge bg-success">Available</span>
-                    </div>
-                    <p class="text-muted mb-2">
-                        <i class="bi bi-geo-alt-fill text-primary"></i> {{hostel.location}}
-                    </p>
-                    <p class="card-text text-muted small">Affordable shared accommodation perfect for MIT and Harvard students.</p>
-                    <div class="amenities mb-3">
-                        <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
-                        <span class="badge bg-light text-dark me-1"><i class="bi bi-bicycle"></i> Parking</span>
-                        <span class="badge bg-light text-dark"><i class="bi bi-cup-hot"></i> Kitchen</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        
-                        <a href="{% url "hostel_detail" hostel.slug %}" class="btn btn-primary">View Details</a>
+        <div class="row g-4" id="hostelListings">
+            <!-- Hostel Card  -->
+            {% for hostel in hostels  %}
+                <div class="col-md-6 col-lg-4 hostel-card" data-price={{hostel.price}} data-location={{hostel.location|lower}} data-room="shared">
+                    <div class="card h-100 shadow-sm hover-card">
+                        {% with hostel.images.all|first as first_image %}
+                            {% if first_image %}
+                                <img src='{{first_image.image.url}}' class="card-img-top" alt='{{hostel.name}}'>
+                            {% else %}
+                                <img src='{% static 'images/no-image.png'%}'calss="card_imag-top" alt='No image'>
+                            {% endif %}
+                        {% endwith %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">{{hostel.name}}</h5>
+                                <span class="badge bg-success">Available</span>
+                            </div>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-geo-alt-fill text-primary"></i> {{hostel.location}}
+                            </p>
+                            <p class="card-text text-muted small">Affordable shared accommodation perfect for GCTU students.</p>
+                            <div class="amenities mb-3">
+                                <span class="badge bg-light text-dark me-1"><i class="bi bi-wifi"></i> WiFi</span>
+                                <span class="badge bg-light text-dark me-1"><i class="bi bi-bicycle"></i> Parking</span>
+                                <span class="badge bg-light text-dark"><i class="bi bi-cup-hot"></i> Kitchen</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <a href="{% url "hostel_detail" hostel.slug %}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            {% endfor %}
+
+            <!-- No Results Message -->
+            <div id="noResults" class="text-center py-5 d-none">
+                <i class="bi bi-search text-muted" style="font-size: 3rem;"></i>
+                <h4 class="mt-3">No hostels found</h4>
+                <p class="text-muted">Try adjusting your filters or search criteria</p>
             </div>
         </div>
-        {% endfor %}
-
-    <!-- No Results Message -->
-    <div id="noResults" class="text-center py-5 d-none">
-        <i class="bi bi-search text-muted" style="font-size: 3rem;"></i>
-        <h4 class="mt-3">No hostels found</h4>
-        <p class="text-muted">Try adjusting your filters or search criteria</p>
-    </div>
-</div>
 
 
-</section>
 
-<!-- Features Section -->
+        <!-- Features Section -->
 
 <section class="py-5 bg-light">
     <div class="container">
@@ -164,4 +147,5 @@
         </div>
     </div>
 </section>
+    </div>
 {% endblock %}

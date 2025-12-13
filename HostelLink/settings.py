@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'HostelLink.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hostellink',
+        'NAME': 'hostelbay',
         'USER': 'postgres',
         'PASSWORD': 'mina',
         'HOST': 'localhost',
@@ -123,8 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
-STATICROOT=os.path.join(BASE_DIR,'assets')
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+STATICROOT=os.path.join(BASE_DIR, 'assets')
 
 
 # Default primary key field type
@@ -135,13 +135,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = 'login'
-LOGOUT_URL='logout'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=465
-EMAIL_USE_SSL=True
-EMAIL_HOST_USER='oseiparry20@gmail.com'
-EMAIL_HOST_PASSWORD='btmw glzq mwhr xbwe'
+LOGOUT_URL = 'logout'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'oseiparry20@gmail.com'
+EMAIL_HOST_PASSWORD = 'btmw glzq mwhr xbwe'
 
 

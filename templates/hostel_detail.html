@@ -1,276 +1,285 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Sunrise Student Lodge - HostelLink{% endblock %}
+{% block title %}{{hostel.name}}{% endblock %}
 
 {% block content %}
 
 <!-- Hero Image Section -->
-
 <section class="hostel-hero">
-    <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=1200&h=500&fit=crop" alt="Hostel" class="w-100">
+    {% if hostel_image %}
+    <img src="{{ hostel_image.image.url }}" alt="Hostel" class="w-100">
+    {% else %}
+    <img src="{% static 'img/default.jpg' %}" alt="Hostel" class="w-100">
+    {% endif %}
 </section>
 
 <!-- Hostel Details -->
-
 <section class="py-5">
     <div class="container">
         <div class="row">
-            <!-- Main Content -->
+
+            <!-- MAIN CONTENT -->
             <div class="col-lg-8">
+
                 <!-- Title & Location -->
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div>
-                            <h1 class="display-5 fw-bold mb-2">{{hostel.name}}</h1>
+                            <h1 class="display-5 fw-bold mb-2">{{ hostel.name }}</h1>
                             <p class="text-muted fs-5">
                                 <i class="bi bi-geo-alt-fill text-primary"></i> 
-                                {{hostel.location}}
+                                {{ hostel.location }}
                             </p>
                         </div>
-                        <span class="badge bg-success fs-6 px-3 py-2">{{hostel.status}}</span>
-                    </div>
 
-
-                <!-- Rating & Reviews -->
-                <div class="d-flex align-items-center gap-3">
-                    <div>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-half text-warning"></i>
-                        <span class="ms-2 fw-semibold">4.5</span>
-                    </div>
-                    <span class="text-muted">|</span>
-                    <a href="#reviews" class="text-decoration-none">127 reviews</a>
-                </div>
-            </div>
-
-            <!-- Description -->
-            
-
-            <!-- Amenities -->
-            <div class="mb-4">
-                <h4 class="fw-bold mb-3">Amenities</h4>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-wifi text-primary"></i>
-                            <span>High-Speed WiFi</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-shield-check text-primary"></i>
-                            <span>24/7 Security</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-snow text-primary"></i>
-                            <span>Air Conditioning</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-cup-hot text-primary"></i>
-                            <span>Communal Kitchen</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-water text-primary"></i>
-                            <span>Laundry Facilities</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-book text-primary"></i>
-                            <span>Study Rooms</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-bicycle text-primary"></i>
-                            <span>Bike Parking</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="amenity-item">
-                            <i class="bi bi-tv text-primary"></i>
-                            <span>Common Lounge</span>
-                        </div>
+                        <span class="badge bg-success fs-6 px-3 py-2">{{ hostel.status }}</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- Room Types -->
-            <div class="mb-4">
-                <h4 class="fw-bold mb-3">Room Options</h4>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="fw-bold">Single Room</h6>
-                                <p class="text-muted small mb-2">Private room with attached bathroom</p>
-                                <p class="mb-0">
-                                    <span class="h5 text-primary">${{hostel.price_for_one_in_a_room}}</span>
-                                    <small class="text-muted">/semister</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="fw-bold">Two in a Room</h6>
-                                <p class="text-muted small mb-2">Share with another student</p>
-                                <p class="mb-0">
-                                    <span class="h5 text-primary">${{hostel.price_for_two_in_a_room}}</span>
-                                    <small class="text-muted">/semister</small>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <! -- -->
+                <!-- Amenities -->
+                <div class="mb-4">
+                    <h4 class="fw-bold mb-3">Amenities</h4>
+                    <div class="row g-3">
+
+                        {% if hostel.wifi %}
                         <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="fw-bold">Three in a Room</h6>
-                                <p class="text-muted small mb-2">Share with 2 other students</p>
-                                <p class="mb-0">
-                                    <span class="h5 text-primary">{{hostel.price_for_three_in_a_room}}</span>
-                                    <small class="text-muted">/semister</small>
-                                </p>
+                            <div class="amenity-item">
+                                <i class="bi bi-wifi text-primary"></i>
+                                <span>WiFi</span>
                             </div>
                         </div>
-                    </div>
-                    <! --3 in a room -->
+                        {% endif %}
+
+                        {% if hostel.security %}
                         <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="fw-bold">Four in a Room</h6>
-                                <p class="text-muted small mb-2">Share with 3 other students</p>
-                                <p class="mb-0">
-                                    <span class="h5 text-primary">{{hostel.price_for_four_in_a_room}}</span>
-                                    <small class="text-muted">/semister</small>
-                                </p>
+                            <div class="amenity-item">
+                                <i class="bi bi-shield-check text-primary"></i>
+                                <span>24/7 Security</span>
                             </div>
                         </div>
-                    </div>
-                    <!--4 in a room-->
-                        
-                </div>
-            </div>
+                        {% endif %}
 
-            <!-- House Rules -->
-            <div class="mb-4">
-                <h4 class="fw-bold mb-3">House Rules</h4>
-                <ul class="list-unstyled">
-                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Check-in: 2:00 PM - 10:00 PM</li>
-                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Check-out: 11:00 AM</li>
-                    <li class="mb-2"><i class="bi bi-x-circle text-danger me-2"></i> No smoking inside</li>
-                    <li class="mb-2"><i class="bi bi-x-circle text-danger me-2"></i> No pets allowed</li>
-                    <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Quiet hours: 10:00 PM - 8:00 AM</li>
-                </ul>
-            </div>
+                        {% if hostel.ac %}
+                        <div class="col-md-6">
+                            <div class="amenity-item">
+                                <i class="bi bi-snow text-primary"></i>
+                                <span>Air Conditioning</span>
+                            </div>
+                        </div>
+                        {% endif %}
 
-            <!-- Location Map -->
-            <div class="mb-4">
-                <h4 class="fw-bold mb-3">Location</h4>
-                <div class="map-placeholder bg-light rounded p-5 text-center">
-                    <i class="bi bi-geo-alt-fill text-primary" style="font-size: 3rem;"></i>
-                    <p class="text-muted mt-2">123 Commonwealth Ave, Boston, MA 02215</p>
-                    <p class="text-muted small">5 min walk to Boston University</p>
-                </div>
-            </div>
-        </div>
+                        {% if hostel.kitchen %}
+                        <div class="col-md-6">
+                            <div class="amenity-item">
+                                <i class="bi bi-cup-hot text-primary"></i>
+                                <span>Kitchen Facility</span>
+                            </div>
+                        </div>
+                        {% endif %}
 
-        <!-- Sidebar -->
-        <div class="col-lg-4">
-            <div class="card shadow-sm sticky-top" style="top: 100px;">
-                <div class="card-body">
-                    <!-- Price -->
-                    <div class="text-center mb-4">
-                        <h2 class="text-primary mb-0">$350<small class="text-muted fs-6">/semister</small></h2>
-                    </div>
+                        {% if hostel.laundry %}
+                        <div class="col-md-6">
+                            <div class="amenity-item">
+                                <i class="bi bi-water text-primary"></i>
+                                <span>Laundry</span>
+                            </div>
+                        </div>
+                        {% endif %}
 
-                    <!-- Contact Form -->
-                    <form id="contactForm" onsubmit="handleContactManager(event)">
-                        <h5 class="fw-bold mb-3">Contact Manager</h5>
-                        
-                        <div class="mb-3">
-                            <label class="form-label small">Your Name</label>
-                            <input type="text" class="form-control" required>
+                        {% if hostel.study_room %}
+                        <div class="col-md-6">
+                            <div class="amenity-item">
+                                <i class="bi bi-book text-primary"></i>
+                                <span>Study Room</span>
+                            </div>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label small">Your Email</label>
-                            <input type="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label small">Phone Number</label>
-                            <input type="tel" class="form-control" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label small">Move-in Date</label>
-                            <input type="date" class="form-control" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label small">Message</label>
-                            <textarea class="form-control" rows="3" placeholder="I'm interested in..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary w-100 mb-2">
-                            <i class="bi bi-send"></i> Send Inquiry
-                        </button>
-                        <button type="button" class="btn btn-outline-primary w-100" onclick="callManager()">
-                            <i class="bi bi-telephone"></i> Call Manager
-                        </button>
-                    </form>
+                        {% endif %}
 
-                    <!-- Manager Info -->
-                    <hr class="my-4">
-                    <div class="text-center">
-                        <img src="https://ui-avatars.com/api/?name=John+Smith&size=80" class="rounded-circle mb-2" alt="Manager">
-                        <h6 class="fw-bold mb-1">{{user.firstname}} {{user.lastname}}</h6>
-                        <p class="text-muted small mb-2">Property Manager</p>
-                        <div class="d-flex justify-content-center gap-2">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <span class="small">4.8 (45 reviews)</span>
+                        {% if hostel.parking %}
+                        <div class="col-md-6">
+                            <div class="amenity-item">
+                                <i class="bi bi-bicycle text-primary"></i>
+                                <span>Parking</span>
+                            </div>
                         </div>
+                        {% endif %}
+
+                        {% if hostel.common_lounge %}
+                        <div class="col-md-6">
+                            <div class="amenity-item">
+                                <i class="bi bi-tv text-primary"></i>
+                                <span>Common Lounge</span>
+                            </div>
+                        </div>
+                        {% endif %}
+
                     </div>
                 </div>
+
+                <!-- Room Options -->
+                <div class="mb-4">
+                    <h4 class="fw-bold mb-3">Room Options</h4>
+                    <div class="row g-3">
+
+                        <!-- Single Room -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="fw-bold">Single Room</h6>
+                                    <p class="text-muted small mb-2">Private room with attached bathroom</p>
+                                    <p class="mb-0">
+                                        <span class="h5 text-primary">{{ hostel.price_for_one_in_a_room }}</span>
+                                        <small class="text-muted">/Semester</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two in a Room -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="fw-bold">Two in a Room</h6>
+                                    <p class="text-muted small mb-2">Share with another student</p>
+                                    <p class="mb-0">
+                                        <span class="h5 text-primary">{{ hostel.price_for_two_in_a_room }}</span>
+                                        <small class="text-muted">/Semester</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Three in a Room -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="fw-bold">Three in a Room</h6>
+                                    <p class="text-muted small mb-2">Share with 2 other students</p>
+                                    <p class="mb-0">
+                                        <span class="h5 text-primary">{{ hostel.price_for_three_in_a_room }}</span>
+                                        <small class="text-muted">/Semester</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Four in a Room -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="fw-bold">Four in a Room</h6>
+                                    <p class="text-muted small mb-2">Share with 3 other students</p>
+                                    <p class="mb-0">
+                                        <span class="h5 text-primary">{{ hostel.price_for_four_in_a_room }}</span>
+                                        <small class="text-muted">/Semester</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- House Rules -->
+                <div class="mb-4">
+                    <h4 class="fw-bold mb-3">House Rules</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Check-in: 2:00 PM - 10:00 PM</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Check-out: 11:00 AM</li>
+                        <li class="mb-2"><i class="bi bi-x-circle text-danger me-2"></i> No smoking inside</li>
+                        <li class="mb-2"><i class="bi bi-x-circle text-danger me-2"></i> No pets allowed</li>
+                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i> Quiet hours: 10:00 PM - 8:00 AM</li>
+                    </ul>
+                </div>
+
+                <!-- Map -->
+                <div class="map-container">
+                    <iframe 
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://maps.google.com/maps?q={{ hostel.latitude }},{{ hostel.longitude }}&t=&z=15&ie=UTF8&iwloc=&output=embed&markers=color:red%7Clabel:H%7C{{ hostel.latitude }},{{ hostel.longitude }}">
+                    </iframe>
+                </div>
+
             </div>
+            <!-- END MAIN CONTENT -->
+
+            <!-- SIDEBAR -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-body">
+
+                        {% if user.is_authenticated %}
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-muted mb-3">Contact Information</h6>
+
+                            <!-- Phone -->
+                            <a href="tel:+15551234567" class="btn btn-primary btn-lg w-100 mb-3 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-telephone-fill me-2"></i>
+                                <div class="text-start">
+                                    <div class="small opacity-75">Call Manager</div>
+                                    <div class="fw-bold">{{ managers.address}}</div>
+                                </div>
+                            </a>
+
+                            <!-- WhatsApp -->
+                            <a href="https://wa.me/15551234567?text=Hi%2C%20I'm%20interested%20in%20{{ hostel.name }}" 
+                                target="_blank" 
+                                class="btn btn-success btn-lg w-100 mb-3 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-whatsapp me-2 fs-4"></i>
+                                <div class="text-start">
+                                    <div class="small opacity-75">Message on WhatsApp</div>
+                                    <div class="fw-bold">894578697</div>
+                                </div>
+                            </a>
+
+                            <!-- Email -->
+                            <a href="mailto:{{ hostel.manager.email }}?subject=Inquiry about {{ hostel.name }}" 
+                               class="btn btn-outline-primary btn-lg w-100 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-envelope-fill me-2"></i>
+                                <div class="text-start">
+                                    <div class="small">Send Email</div>
+                                    <div class="fw-bold">{{ hostel.manager.email }}</div>
+                                </div>
+                            </a>
+                        </div>
+
+                        {% else %}
+
+                        <div class="card p-4 text-center my-4">
+                            <h6 class="fw-bold text-muted mb-2">Manager's Contact</h6>
+                            <p class="text-muted">Please log in to view contact details.</p>
+
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary w-100">Log In</a>
+                            <a href="{% url 'signup' %}?next={{ request.path }}" class="btn btn-outline-primary w-100 mt-2">Register</a>
+                        </div>
+
+                        {% endif %}
+
+                        <!-- Manager Info -->
+                        <div class="text-center pt-4 border-top">
+                            <div class="position-relative d-inline-block mb-3">
+                                <img src="https://ui-avatars.com/api/?name={{ hostel.manager.username }}&size=100&background=3B82F6&color=fff" 
+                                     class="rounded-circle border border-3 border-primary">
+
+                                <span class="position-absolute bottom-0 end-0 badge bg-success rounded-circle p-2">
+                                    <i class="bi bi-check-lg"></i>
+                                </span>
+                            </div>
+
+                            <h5 class="fw-bold mb-1">{{ hostel.manager.username }}</h5>
+                            <p class="text-muted small mb-2">Property Manager</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- END SIDEBAR -->
+
         </div>
     </div>
-</div>
-
-
 </section>
 
-<!-- Contact Modal -->
-
-<div class="modal fade" id="contactModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Inquiry Sent!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center py-4">
-                <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-                <h5 class="mt-3">Your message has been sent</h5>
-                <p class="text-muted">The hostel manager will contact you shortly via email or phone.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}

@@ -281,10 +281,13 @@ body {
     justify-content: center;
 }
 
+
+
 /* Dashboard Styles */
 .dashboard-wrapper {
     display: flex;
     min-height: calc(100vh - 76px);
+    padding-bottom: 0; /* Remove bottom padding */
 }
 
 .dashboard-sidebar {
@@ -345,6 +348,8 @@ body {
     margin-left: 280px;
     padding: 2rem;
     background-color: var(--secondary-color);
+    min-height: calc(100vh - 76px);
+    padding-bottom: 3rem; /* Add padding for footer */
 }
 
 /* Stats Cards */
@@ -496,3 +501,25 @@ html {
     border-top-color: var(--white);
     animation: spin 1s ease-in-out infinite;
 }
+/* Google Map Responsive Wrapper */
+.map-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+

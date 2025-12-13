@@ -13,10 +13,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href={% static 'css/style.css' %}> 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
     
     {% block extra_css %}{% endblock %}
-    {%block extra_js%}{%endblock%}
 </head>
 
 <body>
@@ -30,7 +29,7 @@
         <div class="container">
             <a class="navbar-brand" href="/">
             <i class="bi bi-house-door-fill text-primary"></i>
-            <span class="fw-bold text-primary">HostelLink</span>
+            <span class="fw-bold text-primary">HostelBay</span>
             </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -92,7 +91,7 @@
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <h5 class="fw-bold">
-                        <i class="bi bi-house-door-fill"></i> HostelLink
+                        <i class="bi bi-house-door-fill"></i> HostelBay
                     </h5>
                     <p class="text-light">Connecting students with quality hostels near their universities.</p>
                 </div>
@@ -123,7 +122,7 @@
             </div>
             <hr class="border-secondary">
             <div class="text-center">
-                <p class="mb-0">&copy; 2025 HostelLink. All rights reserved.</p>
+                <p class="mb-0">&copy; 2025 HostelBay. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -132,7 +131,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JS -->
-    <script src={% static 'js/main.js' %}></script>
-    
+    <script src="{% static 'js/main.js' %}"></script>
+    {%block extra_js%}{%endblock%}
 </body>
 </html>
