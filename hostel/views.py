@@ -32,6 +32,6 @@ def hostel_details(request, slug):
         'hostel': hostel,
         'hostel_image': hostel_image,
         'hostel_manager': hostel_manager,
-        'managers': managers
+        'manager': hostel.manager,
     }
     return render(request, 'hostel_detail.html', context)

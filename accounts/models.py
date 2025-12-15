@@ -26,12 +26,11 @@ class Manager(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name="manager_profile",
-        limit_choices_to={'role': 'manager'}
+        related_name="hostels",
     )
 
-    whatsapp = models.CharField(max_length=20, blank=True)
-    address = models.TextField(blank=True, null=True)
+    whatsapp = models.CharField(max_length=13, blank=True)
+    address = models.CharField(max_length=13,blank=True, null=True)
 
     # Use the same profile image from User model so we don't duplicate
     # or allow manager-specific override:

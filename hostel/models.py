@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
-from accounts.models import User
+from accounts.models import User,Manager
 
 
 # Create your models here.
@@ -12,18 +12,15 @@ class Hostel(models.Model):
         ('rejected', 'Rejected'),
     ]
     LOCATIONS = [
-        ('abeka', 'Abeka'),
-        ('tesano', 'Tesano'),
-        ('lapaz', 'Lapaz'),
-        ('aladjo', 'Aladjo'),
+        ('Abeka', 'Abeka'),
+        ('Tesano', 'Tesano'),
+        ('Tapaz', 'Lapaz'),
+        ('Aladjo', 'Aladjo'),
     ]
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=50, choices=LOCATIONS, default='none')
-    manager = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'manager'})
+    manager = models.ForeignKey(User, on_delete=models.CASCADE, )
 
-    # rooms
-    capacity = models.IntegerField()
-    available_rooms = models.IntegerField()
 
     # prices
     price_for_one_in_a_room = models.DecimalField(max_digits=8, decimal_places=2, default='0.00')
@@ -49,6 +46,11 @@ class Hostel(models.Model):
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
 
+    manager=models.ForeignKey(Manager, 
+                              on_delete=models.CASCADE, 
+                                related_name='hostels')
+    
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -56,6 +58,7 @@ class Hostel(models.Model):
 
     def __str__(self):
         return self.name
+    
 
 
 class HostelImage(models.Model):
