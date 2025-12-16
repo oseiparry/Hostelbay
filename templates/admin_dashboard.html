@@ -19,20 +19,20 @@
 
 
     <nav class="sidebar-nav">
-        <a href="/admin-dashboard" class="sidebar-link active">
+        <a href="/admin_dashboard" class="sidebar-link active">
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
-        <a href="#users" class="sidebar-link" onclick="showSection('users')">
+        <a  class="sidebar-link" onclick="showSection('users')">
             <i class="bi bi-people"></i> Manage Users
         </a>
-        <a href="#hostels" class="sidebar-link" onclick="showSection('hostels')">
+        <a  class="sidebar-link" onclick="showSection('hostels')">
             <i class="bi bi-building"></i> Manage Hostels
         </a>
-        <a href="#reports" class="sidebar-link" onclick="showSection('reports')">
+        <a  class="sidebar-link" onclick="showSection('reports')">
             <i class="bi bi-flag"></i> Reports
             <span class="badge bg-danger ms-auto">5</span>
         </a>
-        <a href="#settings" class="sidebar-link" onclick="showSection('settings')">
+        <a  class="sidebar-link" onclick="showSection('settings')">
             <i class="bi bi-gear"></i> Settings
         </a>
         <a href="{% url "logout" %}" class="sidebar-link text-danger" onclick="logout()">
@@ -84,8 +84,8 @@
                     <i class="bi bi-clock-history"></i>
                 </div>
                 <div>
-                    <h3 class="mb-0">{{pending_hostels}}</h3>
-                    <p class="mb-0 opacity-75">Pending Approval</p>
+                    <h3 class="mb-0">{{total_views}}</h3>
+                    <p class="mb-0 opacity-75">Total Views</p>
                 </div>
             </div>
         </div>

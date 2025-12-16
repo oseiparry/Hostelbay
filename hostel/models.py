@@ -19,7 +19,6 @@ class Hostel(models.Model):
     ]
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=50, choices=LOCATIONS, default='none')
-    manager = models.ForeignKey(User, on_delete=models.CASCADE, )
 
 
     # prices
@@ -27,7 +26,6 @@ class Hostel(models.Model):
     price_for_two_in_a_room = models.DecimalField(max_digits=8, decimal_places=2, default='0.00')
     price_for_three_in_a_room = models.DecimalField(max_digits=8, decimal_places=2, default='0.00')
     price_for_four_in_a_room = models.DecimalField(max_digits=8, decimal_places=2, default='0.00')
-    contact = models.TextField()
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateField(auto_now_add=True)
     priceFilter = models.CharField(max_length=10, default='0.00')
@@ -50,6 +48,7 @@ class Hostel(models.Model):
                               on_delete=models.CASCADE, 
                                 related_name='hostels')
     
+    view_count = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug:

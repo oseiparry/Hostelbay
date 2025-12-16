@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from hostel.models import Hostel, HostelImage
-from accounts.models import User, Manager
+from accounts.models import User
+from django.db.models import F
 
 
 # Create your views here.
@@ -26,7 +27,9 @@ def hostel_details(request, slug):
     hostel = get_object_or_404(Hostel, slug=slug)
     hostel_image = hostel.images.first()
     hostel_manager = User.objects.filter(role='manager')
-    managers = Manager.objects.all()
+    Hostel.objects.filter(id=hostel.id).update(view_count=F('view_count') + 1)
+    request.session[f'viewed_{hostel.id}'] = True
+    hostel.refresh_from_db()
 
     context = {
         'hostel': hostel,

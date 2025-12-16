@@ -27,6 +27,42 @@ if (hostelImagesInput) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    showSection('users');
+});
+
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+function showSection(section) {
+    document.querySelectorAll(".content-section").forEach(sec => {
+        sec.classList.add("d-none");
+    });
+
+    document.getElementById(section + "Section").classList.remove("d-none");
+}
+
+function showSection(section) {
+    // hide all sections
+    document.querySelectorAll('.content-section').forEach(el => {
+        el.classList.add('d-none');
+    });
+
+    // show selected section
+    const target = document.getElementById(section + 'Section');
+    if (target) {
+        target.classList.remove('d-none');
+    }
+
+    // active sidebar link
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.classList.remove('active');
+    });
+
+    event.currentTarget.classList.add('active');
+}
 
 
 // ============================================

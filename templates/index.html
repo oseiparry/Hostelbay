@@ -48,17 +48,9 @@
                     <option value="Aladjo">Aladjo</option>
                 </select>
             </div>
-            <div class="col-md-3">
-                <label class="form-label mb-1">Room Type</label>
-                <label for="roomFilter"></label><select class="form-select" id="roomFilter">
-                    <option value="">All Types</option>
-                    <option value="single">Single Room</option>
-                    <option value="shared">Shared Room</option>
-                    <option value="suite">Suite</option>
-                </select>
-            </div>
+            
             <div class="col-md-3 d-flex align-items-end">
-                <button class="btn btn-outline-secondary w-100" >
+                <button class="btn btn-outline-secondary w-100" onclick="clearFilters()"> 
                     <i class="bi bi-x-circle"></i> Clear Filters
                 </button>
             </div>
@@ -75,7 +67,7 @@
         <div class="row g-4" id="hostelListings">
             <!-- Hostel Card  -->
             {% for hostel in hostels  %}
-                <div class="col-md-6 col-lg-4 hostel-card" data-price={{hostel.price}} data-location={{hostel.location|lower}} data-room="shared">
+                <div class="col-md-6 col-lg-4 hostel-card" data-price={{hostel.price_for_one_in_a_room}} data-location={{hostel.location|lower}} data-room="shared">
                     <div class="card h-100 shadow-sm hover-card">
                         {% with hostel.images.all|first as first_image %}
                             {% if first_image %}
