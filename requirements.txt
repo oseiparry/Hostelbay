@@ -5,4 +5,13 @@ psycopg2-binary
 dj-database-url
 pytz
 python-dotenv
-
+pillow
+django-heroku
+boto3
+django-storages
+django-crispy-forms
+crispy-bootstrap5
+django-filter
+djangorestframework
+djangorestframework-simplejwt
+drf-yasg
