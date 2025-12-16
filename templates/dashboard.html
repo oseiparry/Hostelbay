@@ -26,10 +26,6 @@
             <a href="/dashboard" class="sidebar-link">
                 <i class="bi bi-list-ul"></i> My Listings
             </a>
-            <a href="#" class="sidebar-link">
-                <i class="bi bi-chat-dots"></i> Messages
-                <span class="badge bg-primary ms-auto">3</span>
-            </a>
             <a href="/profile" class="sidebar-link">
                 <i class="bi bi-person"></i> Profile
             </a>
@@ -49,7 +45,7 @@
         <!-- Page Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h2 class="fw-bold mb-1">Welcome back, <span id="managerName">John</span>!</h2>
+                <h2 class="fw-bold mb-1">Welcome back, <span id="managerName">{{manager.user.username}}</span>!</h2>
                 <p class="text-muted mb-0">Manage your hostel listings and bookings</p>
             </div>
             <a href="/add_hostel" class="btn btn-primary">
@@ -65,7 +61,7 @@
                         <i class="bi bi-building"></i>
                     </div>
                     <div>
-                        <h3 class="mb-0">4</h3>
+                        <h3 class="mb-0">{{total_listings}}</h3>
                         <p class="mb-0 opacity-75">Total Listings</p>
                     </div>
                 </div>
@@ -98,7 +94,7 @@
                         <i class="bi bi-eye"></i>
                     </div>
                     <div>
-                        <h3 class="mb-0">1,247</h3>
+                        <h3 class="mb-0">{{total_views}}</h3>
                         <p class="mb-0 opacity-75">Total Views</p>
                     </div>
                 </div>
@@ -106,7 +102,7 @@
         </div>
 
         <!-- Recent Inquiries -->
-        <div class="card shadow-sm mb-4">
+        <!--<div class="card shadow-sm mb-4">
             <div class="card-header bg-white">
                 <h5 class="mb-0"><i class="bi bi-envelope"></i> Recent Inquiries</h5>
             </div>
@@ -161,7 +157,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- My Listings -->
         <div class="card shadow-sm">
@@ -176,64 +172,43 @@
             <div class="card-body">
                 <div class="row g-4">
                     <!-- Listing Card 3 -->
-                    <div class="col-md-6">
-                        <div class="listing-card">
-                            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=400&h=250&fit=crop" alt="Hostel">
-                            <div class="listing-card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h6 class="fw-bold mb-0">Liberty Plaza Suites</h6>
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                </div>
-                                <p class="text-muted small mb-2">
-                                    <i class="bi bi-geo-alt"></i> Philadelphia, PA
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="text-primary fw-bold">$550/month</span>
-                                    <span class="text-muted small">
-                                        <i class="bi bi-eye"></i> 89 views
-                                    </span>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <a href="/edit-hostel/3" class="btn btn-sm btn-outline-primary flex-fill">
-                                        <i class="bi bi-pencil"></i> Edit
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('Liberty Plaza Suites')">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% for hostel in hostels %}
+                        <div class="col-md-6">
+                            <div class="listing-card">
+                                {% if hostel.image %}
+                                <img src="{{ hostel.image.url }}" alt="Hostel">
+                                {% endif %}
 
-                    <!-- Listing Card 4 -->
-                    <div class="col-md-6">
-                        <div class="listing-card">
-                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=250&fit=crop" alt="Hostel">
-                            <div class="listing-card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h6 class="fw-bold mb-0">Fenway Residence</h6>
-                                    <span class="badge bg-success">Active</span>
-                                </div>
-                                <p class="text-muted small mb-2">
-                                    <i class="bi bi-geo-alt"></i> Boston, MA
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="text-primary fw-bold">$320/month</span>
-                                    <span class="text-muted small">
-                                        <i class="bi bi-eye"></i> 549 views
-                                    </span>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <a href="/edit-hostel/4" class="btn btn-sm btn-outline-primary flex-fill">
-                                        <i class="bi bi-pencil"></i> Edit
-                                    </a>
-                                    <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('Fenway Residence')">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
+                                <div class="listing-card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h6 class="fw-bold mb-0">{{ hostel.name }}</h6>
+                                        <span class="badge 
+                                            {% if hostel.status == 'active' %}bg-success
+                                            {% elif hostel.status == 'pending' %}bg-warning text-dark
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ hostel.status }}
+                                        </span>
+                                    </div>
+
+                                    <p class="text-muted small mb-2">
+                                        <i class="bi bi-geo-alt"></i> {{ hostel.location }}
+                                    </p>
+
+                                    <div class="d-flex gap-2">
+                                        <a href="{% url 'edit_hostel' hostel.id %}" class="btn btn-sm btn-outline-primary flex-fill">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        {% empty %}
+                        <p class="text-muted">You haven't added any hostels yet.</p>
+                        {% endfor %}
+
                 </div>
             </div>
         </div>

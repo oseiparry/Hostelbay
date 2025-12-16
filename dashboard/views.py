@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from accounts.models import User
 from .models import Hostel, Report
 from django.contrib.auth.decorators import user_passes_test
@@ -7,18 +7,34 @@ from django.db.models import Sum
 
 # Create your views here.
 def is_manager(user):
-    return user.is_authenticated and (user.role == 'admin' or user.is_superuser)
+    return user.is_authenticated and user.role == 'manager'
 
 
-@user_passes_test(is_manager or is_admin)
+@user_passes_test(is_manager)
 def dashboard(request):
-    manager = request.user
+    user = request.user
 
-    hostels = Hostel.objects.all()
+    # THIS is the correct access based on your model
+    manager = getattr(user, 'hostels', None)
+
+    if manager is None:
+        return redirect('home')
+
+    hostels = Hostel.objects.filter(manager=manager)
+
+    total_views = hostels.aggregate(
+    total=Sum('view_count')
+    )['total'] or 0
+
     context = {
         'my_hostels': hostels,
+        'total_listings': hostels.count(),
+        'total_views': total_views,
     }
-    return render(request, 'dashboard.html', context)
+
+    return render(request, 'dashboard.html',context )
+
+
 
 
 def is_admin(user):
