@@ -17,8 +17,20 @@ class Hostel(models.Model):
         ('Tapaz', 'Lapaz'),
         ('Aladjo', 'Aladjo'),
     ]
+
+    SCHOOLS = [
+        ('KNUST', 'KNUST'),
+        ('UG', 'UG'),
+        ('GCTU', 'GCTU'),
+        ('UPSA ', 'UPSA'),
+    ]
     name = models.CharField(max_length=100)
+    school = models.CharField(max_length=50, choices=SCHOOLS, default='none')
     location = models.CharField(max_length=50, choices=LOCATIONS, default='none')
+
+    #images
+    image = models.ImageField(upload_to='hostel_images/', blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 
     # prices
@@ -48,7 +60,10 @@ class Hostel(models.Model):
                               on_delete=models.CASCADE, 
                                 related_name='hostels')
     
+
+    #analytics
     view_count = models.PositiveIntegerField(default=0)
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -58,12 +73,3 @@ class Hostel(models.Model):
     def __str__(self):
         return self.name
     
-
-
-class HostelImage(models.Model):
-    hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='hostel_images/', blank=True, null=True)
-    uploaded_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-
-    def __str__(self):
-        return f'Image for {self.hostel.name}'

@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from hostel.models import Hostel, HostelImage
+from hostel.models import Hostel
 from accounts.models import User
 from django.db.models import F
 
 
 # Create your views here.
 def home(request):
+    if request.user.is_authenticated:
+        hostels=Hostel.objects.filter(school=request.user.school, status='active')
+    else:
+        hostels = Hostel.objects.filter( status='active')
     context = {
-        'hostels': Hostel.objects.all(),
-        'hostel_image': HostelImage.objects.all(),
+        'hostels': hostels,
         'manager': User.objects.filter(role='manager')
     }
     return render(request, 'index.html', context)
@@ -25,8 +28,8 @@ def edit_hostel(request):
 
 def hostel_details(request, slug):
     hostel = get_object_or_404(Hostel, slug=slug)
-    hostel_image = hostel.images.first()
     hostel_manager = User.objects.filter(role='manager')
+    hostel_image = hostel.image
     Hostel.objects.filter(id=hostel.id).update(view_count=F('view_count') + 1)
     request.session[f'viewed_{hostel.id}'] = True
     hostel.refresh_from_db()

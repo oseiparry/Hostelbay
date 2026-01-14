@@ -61,23 +61,6 @@
                                         required>
                                 </div>
                             </div>
-                
-                            <!-- username  -->
-                            <div class="mb-3">
-                                <label for="fullName" class="form-label">Username</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">
-                                        <i class="bi bi-person"></i>
-                                    </span>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="fullName" 
-                                        placeholder="JohnDoe" 
-                                        name='username'
-                                        required>
-                                </div>
-                            </div>
 
                             <!-- Email -->
                             <div class="mb-3">
@@ -161,6 +144,26 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <!-- School -->
+                            <div class="mb-3">
+                                <label for="school" class="form-label">Select Your School</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-building"></i>
+                                    </span>
+                                    <select 
+                                        class="form-select" 
+                                        id="school" 
+                                        name="school" 
+                                        required>
+                                        <option value="" disabled selected>Select your school</option>
+                                        <option value="GCTU">Ghana Communication Technology University</option>
+                                        <option value="UG">University of Ghana</option>
+                                        <option value="KNUST">Kwame Nkrumah University of Science and Technology</option>
+                                        <option value="UPSA">University of Professional Studies Accra</option>
+                                    </select>
+                                </div>
 
                             <!-- Terms & Conditions -->
                             <div class="form-check mb-4">
