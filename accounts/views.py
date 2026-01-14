@@ -59,10 +59,10 @@ def change_password(request):
 
 def loginView(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
@@ -89,7 +89,7 @@ def signup(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
-        username = request.POST.get('username')
+        school = request.POST.get('school')
 
         user_data_has_error = False
 
@@ -98,10 +98,10 @@ def signup(request):
             user_data_has_error = True
             messages.error(request, 'Email already exists')
 
-        # validate username
-        if User.objects.filter(username=username).exists():
+        # validate email
+        if User.objects.filter(email=email).exists():
             user_data_has_error = True
-            messages.error(request, 'Username already exists')
+            messages.error(request, 'Email already exists')
 
         # vallidate password matching
         if password != confirm_password:
@@ -124,8 +124,8 @@ def signup(request):
                 phone=phone,
                 email=email,
                 password=password,
-                username=username,
                 role='student',
+                school=school,
 
             )
             messages.success(request, 'Account created succesfully, Login now')

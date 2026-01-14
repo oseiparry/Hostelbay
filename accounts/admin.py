@@ -1,26 +1,50 @@
 from django.contrib import admin
-from .models import User, Manager, PasswordReset
 from django.contrib.auth.admin import UserAdmin
+from .models import User
 
-
-# Register your models here.
-
-
+@admin.register(User)
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ("username", "email", "role", "is_staff")
-    search_fields = ("username", "email")
-    ordering = ("username",)
 
-    fieldsets = UserAdmin.fieldsets + (
-        ("Custom Fields", {"fields": ("role", "phone", "profile_image")}),
+    # 🔥 List view
+    list_display = ("email", "role", "is_staff", "is_active")
+    list_filter = ("role", "is_staff", "is_active")
+
+    # 🚫 Use email instead of username everywhere
+    ordering = ("email",)
+    search_fields = ("email",)
+
+    # Layout like default Django admin
+    fieldsets = (
+        (None, {"fields": ("email", "password")}),
+        ("Personal info", {"fields": ("first_name", "last_name", "phone", "profile_image")}),
+        ("Permissions", {
+            "fields": (
+                "role",
+                "is_active",
+                "is_staff",
+                "is_superuser",
+                "groups",
+                "user_permissions",
+            )
+        }),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
 
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        ("Custom Fields", {"fields": ("role", "phone", "profile_image")}),
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": (
+                "email",
+                "password1",
+                "password2",
+                "first_name",
+                "last_name",
+                "phone",
+                "profile_image",
+                "role",
+                "is_staff",
+                "is_active",
+            ),
+        }),
     )
-
-
-admin.site.register(User, CustomUserAdmin)
-admin.site.register(Manager)
-admin.site.register(PasswordReset)
