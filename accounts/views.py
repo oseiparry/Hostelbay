@@ -10,6 +10,7 @@ from hostel.views import home
 from socket import timeout
 import smtplib
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMultiAlternatives
 
 
 # Create your views here.
@@ -152,20 +153,69 @@ def forgot_password(request):
                 f'{request.scheme}://{request.get_host()}{password_reset_url}'
             )
 
-            email_body = (
-                f"Reset your password using the link below:\n\n"
-                f"{full_password_reset_url}"
-            )
+            subject = "Reset Your HostelLink Password"
 
-            email_message = EmailMessage(
-                'Reset your password',
-                email_body,
+            text_content = f"""
+            Hello {user.first_name},
+
+            We received a request to reset your HostelLink password.
+
+            Use the link below to create a new password:
+            {full_password_reset_url}
+
+            If you didn’t request this, please ignore this email.
+
+            HostelLink Team
+            """
+
+            html_content = f"""
+            <!DOCTYPE html>
+            <html>
+            <body style="font-family: Arial, sans-serif; background-color: #f6f8fa; padding: 20px;">
+                <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px;">
+                <h2 style="color: #0d6efd;">Password Reset Request</h2>
+
+                <p>We received a request to reset your HostelLink password.</p>
+
+                <p>Click the button below to create a new password:</p>
+
+                <p style="text-align: center;">
+                    <a href="{full_password_reset_url}"
+                    style="
+                        background-color: #0d6efd;
+                        color: white;
+                        padding: 12px 20px;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        display: inline-block;
+                    ">
+                    Reset Password
+                    </a>
+                </p>
+
+                <p style="font-size: 14px; color: #555;">
+                    If you didn’t request this, you can safely ignore this email.
+                </p>
+
+                <hr>
+
+                <p style="font-size: 12px; color: #888;">
+                    HostelLink • Secure Student Housing Platform
+                </p>
+                </div>
+            </body>
+            </html>
+            """
+
+            email = EmailMultiAlternatives(
+                subject,
+                text_content,
                 settings.EMAIL_HOST_USER,
                 [email],
             )
 
-            email_message.send(fail_silently=False)
-
+            email.attach_alternative(html_content, "text/html")
+            email.send()
         except User.DoesNotExist:
             # 🔐 SECURITY: don't reveal whether email exists
             pass
@@ -187,12 +237,8 @@ def forgot_password(request):
     return render(request, 'forgot_password.html')
 
 
-def reset_password_sent(request, reset_id):
-    if PasswordReset.objects.filter(reset_id=reset_id).exists():
-        return render(request, 'password_reset_sent.html')
-    else:
-        messages.error(request, 'Invalid reset_id')
-        return redirect('forgot_password')
+def reset_password_sent(request):
+    return render(request, 'password_reset_sent.html')
 
 
 def reset_password(request, reset_id):
