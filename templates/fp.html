@@ -1,274 +1,169 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Forgot Password - HostelLink{% endblock %}
-
-{% block extra_css %}
-<style>
-    .auth-section {
-        min-height: calc(100vh - 76px);
-        display: flex;
-        align-items: center;
-        background: linear-gradient(135deg, #F9FAFB 0%, #E0E7FF 100%);
-        padding: 2rem 0;
-    }
-
-    .auth-card {
-        animation: fadeInUp 0.5s ease-out;
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .icon-wrapper {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, #0A74DA 0%, #667eea 100%);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        box-shadow: 0 10px 25px rgba(10, 116, 218, 0.3);
-    }
-
-    .form-control:focus {
-        border-color: #0A74DA;
-        box-shadow: 0 0 0 0.25rem rgba(10, 116, 218, 0.15);
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #0A74DA 0%, #667eea 100%);
-        border: none;
-        padding: 0.75rem 2rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(10, 116, 218, 0.4);
-    }
-
-    .steps-indicator {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 2rem;
-    }
-
-    .step {
-        flex: 1;
-        text-align: center;
-        position: relative;
-        padding: 0.5rem;
-    }
-
-    .step::before {
-        content: '';
-        position: absolute;
-        top: 15px;
-        left: 50%;
-        width: 100%;
-        height: 2px;
-        background: #E5E7EB;
-        z-index: -1;
-    }
-
-    .step:first-child::before {
-        left: 50%;
-        width: 50%;
-    }
-
-    .step:last-child::before {
-        width: 50%;
-        left: 0;
-    }
-
-    .step-circle {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: #E5E7EB;
-        color: #6B7280;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .step.active .step-circle {
-        background: linear-gradient(135deg, #0A74DA 0%, #667eea 100%);
-        color: white;
-        box-shadow: 0 4px 12px rgba(10, 116, 218, 0.4);
-    }
-
-    .step.completed .step-circle {
-        background: #10B981;
-        color: white;
-    }
-
-    .alert-custom {
-        border-left: 4px solid #0A74DA;
-        background-color: #EFF6FF;
-        border-radius: 8px;
-    }
-</style>
-{% endblock %}
+{% block title %}Sign Up - HostelLink{% endblock %}
 
 {% block content %}
-<div class="auth-section">
+<section class="auth-section py-5">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card shadow-lg border-0 auth-card">
+            <div class="col-md-6">
+                <div class="card shadow-lg border-0">
                     <div class="card-body p-5">
-                        <!-- Icon -->
                         <div class="text-center mb-4">
-                            <div class="icon-wrapper">
-                                <i class="bi bi-lock-fill text-white" style="font-size: 2.5rem;"></i>
-                            </div>
+                            <i class="bi bi-person-plus-fill text-primary" style="font-size: 3rem;"></i>
+                            <h3 class="mt-3 fw-bold">Create Account</h3>
+                            <p class="text-muted">Join HostelLink today</p>
                         </div>
 
-                        <!-- Header -->
-                        <div class="text-center mb-4">
-                            <h2 class="fw-bold mb-2">Forgot Password?</h2>
-                            <p class="text-muted">No worries! Enter your email and we'll send you reset instructions.</p>
-                        </div>
-
-                        <!-- Steps Indicator -->
-                        <div class="steps-indicator">
-                            <div class="step active">
-                                <div class="step-circle">1</div>
-                                <small class="text-muted d-block">Email</small>
-                            </div>
-                            <div class="step">
-                                <div class="step-circle">2</div>
-                                <small class="text-muted d-block">Verify</small>
-                            </div>
-                            <div class="step">
-                                <div class="step-circle">3</div>
-                                <small class="text-muted d-block">Reset</small>
-                            </div>
-                        </div>
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} text-center py-2">
-                                            {{ message }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                        <!-- Form -->
-                        <form id="forgotPasswordForm" onsubmit="handleForgotPassword(event)" method="POST">
-                            {% csrf_token %}
+                        <form id="signupForm" onsubmit="handleSignup(event)">
+                            <!-- User Role Selection -->
                             <div class="mb-4">
-                                <label for="email" class="form-label fw-semibold">Email Address</label>
+                                <label class="form-label fw-semibold">I am a:</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check form-check-card flex-fill">
+                                        <input class="form-check-input" type="radio" name="userRole" id="studentRole" value="student" checked>
+                                        <label class="form-check-label w-100 p-3 border rounded text-center" for="studentRole">
+                                            <i class="bi bi-backpack d-block fs-2 text-primary"></i>
+                                            <strong>Student</strong>
+                                            <small class="d-block text-muted">Looking for a hostel</small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-card flex-fill">
+                                        <input class="form-check-input" type="radio" name="userRole" id="managerRole" value="manager">
+                                        <label class="form-check-label w-100 p-3 border rounded text-center" for="managerRole">
+                                            <i class="bi bi-building d-block fs-2 text-primary"></i>
+                                            <strong>Hostel Manager</strong>
+                                            <small class="d-block text-muted">List your hostel</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Full Name</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-light border-end-0">
-                                        <i class="bi bi-envelope text-muted"></i>
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="fullName" 
+                                        name="fullName"
+                                        placeholder="John Doe" 
+                                        nam
+                                        required>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="signupEmail" class="form-label">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-envelope"></i>
                                     </span>
                                     <input 
                                         type="email" 
-                                        class="form-control border-start-0" 
-                                        id="email" 
+                                        class="form-control" 
+                                        id="signupEmail" 
                                         name="email"
                                         placeholder="your.email@example.com" 
-                                        required
-                                    >
+                                        required>
                                 </div>
-                                <small class="text-muted">We'll send a password reset link to this email</small>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100 mb-3">
-                                <i class="bi bi-send me-2"></i>Send Reset Link
+                            <!-- Phone Number -->
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-telephone"></i>
+                                    </span>
+                                    <input 
+                                        type="tel" 
+                                        class="form-control" 
+                                        id="phone" 
+                                        name="phone"
+                                        placeholder="+1 (555) 123-4567" 
+                                        required>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-3">
+                                <label for="signupPassword" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+                                    <input 
+                                        type="password" 
+                                        class="form-control" 
+                                        id="signupPassword" 
+                                        name="password"
+                                        placeholder="Create a password" 
+                                        required>
+                                    <button 
+                                        class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        onclick="togglePassword('signupPassword')">
+                                        <i class="bi bi-eye" id="signupPassword-icon"></i>
+                                    </button>
+                                </div>
+                                <small class="text-muted">At least 8 characters</small>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </span>
+                                    <input 
+                                        type="password" 
+                                        class="form-control" 
+                                        id="confirmPassword" 
+                                        name="confirmPassword"
+                                        placeholder="Re-enter password" 
+                                        required>
+                                    <button 
+                                        class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        onclick="togglePassword('confirmPassword')">
+                                        <i class="bi bi-eye" id="confirmPassword-icon"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Terms & Conditions -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label small" for="terms">
+                                    I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+                                </label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                <i class="bi bi-check-circle"></i> Create Account
                             </button>
-
-                            <div class="text-center">
-                                <a href="/login" class="text-decoration-none">
-                                    <i class="bi bi-arrow-left me-1"></i>Back to Login
-                                </a>
-                            </div>
                         </form>
 
-                        <!-- Info Alert -->
-                        <div class="alert alert-custom mt-4 mb-0">
-                            <small>
-                                <i class="bi bi-info-circle text-primary me-2"></i>
-                                <strong>Can't find the email?</strong> Check your spam folder or contact support.
-                            </small>
+                        <!-- Login Link -->
+                        <div class="text-center mt-4">
+                            <p class="text-muted mb-0">
+                                Already have an account? 
+                                <a href="/login" class="text-primary fw-semibold text-decoration-none">Login here</a>
+                            </p>
                         </div>
                     </div>
                 </div>
-
-                <!-- Additional Help -->
-                <div class="text-center mt-4">
-                    <p class="text-muted mb-0">
-                        Need help? <a href="/contact" class="text-primary fw-semibold">Contact Support</a>
-                    </p>
-                </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg">
-            <div class="modal-body text-center p-5">
-                <div class="mb-4">
-                    <div class="icon-wrapper" style="width: 100px; height: 100px;">
-                        <i class="bi bi-check-lg text-white" style="font-size: 3rem;"></i>
-                    </div>
-                </div>
-                <h3 class="fw-bold mb-3">Check Your Email!</h3>
-                <p class="text-muted mb-4">
-                    We've sent password reset instructions to<br>
-                    <strong id="emailSent"></strong>
-                </p>
-                <p class="text-muted small mb-4">
-                    Didn't receive the email? Check your spam folder or 
-                    <a href="#" onclick="resendEmail()">click here to resend</a>
-                </p>
-                <button type="button" class="btn btn-primary px-5" onclick="window.location.href='/login'">
-                    Back to Login
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-function handleForgotPassword(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    
-    // Show email in modal
-    document.getElementById('emailSent').textContent = email;
-    
-    // Show success modal
-    const modal = new bootstrap.Modal(document.getElementById('successModal'));
-    modal.show();
-    
-    // In production, send reset email via backend
-    console.log('Reset link sent to:', email);
-}
-
-function resendEmail() {
-    alert('Reset link resent! Please check your email.');
-}
-</script>
+</section>
 {% endblock %}

@@ -83,9 +83,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hostelbay',
+        "USER":'postgres',
+        "PASSWORD":'mina',
+        'HOST':'localhost',
+        "PORT":'5432',
     }
 }
-DATABASES ["default"]=dj_database_url.parse (config("DATABASE_URL"))
+#DATABASES ["default"]=dj_database_url.parse (config("DATABASE_URL"))
 
 
 # Password validation

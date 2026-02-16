@@ -13,7 +13,7 @@
                         <div class="text-center mb-4">
                             <i class="bi bi-person-plus-fill text-primary" style="font-size: 3rem;"></i>
                             <h3 class="mt-3 fw-bold">Create Account</h3>
-                            <p class="text-muted">Join HostelLink today</p>
+                            <p class="text-muted">Join Hostelbay today</p>
                         </div>
                         {%if messages%}
                             {%for message in messages %}
@@ -24,8 +24,28 @@
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
-                        <form id="signupForm" onsubmit="handleSignup(event)" method='POST'>
+                        <form id="signupForm"  method='POST'>
                             {% csrf_token %}
+                            <!-- User Role Selection -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">I am a:</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check form-check-card flex-fill">
+                                        <input class="form-check-input" type="radio" name="userRole" id="studentRole" value="student" checked>
+                                        <label class="form-check-label w-100 p-3 border rounded text-center" for="studentRole">
+                                            <i class="bi bi-backpack d-block fs-2 text-primary"></i>
+                                            <strong>Student</strong>
+                                            <small class="d-block text-muted">Looking for a hostel</small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-card flex-fill">
+                                        <input class="form-check-input" type="radio" name="userRole" id="managerRole" value="manager">
+                                        <label class="form-check-label w-100 p-3 border rounded text-center" for="managerRole">
+                                            <i class="bi bi-building d-block fs-2 text-primary"></i>
+                                            <strong>Hostel Manager</strong>
+                                            <small class="d-block text-muted">List your hostel</small>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 

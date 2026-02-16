@@ -67,7 +67,11 @@ def loginView(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+
+            if user.role == "manager":
+                return redirect('dashboard')
+            else:
+                return redirect('home')
 
         else:
             messages.error(request, 'Invalid Credentials')
@@ -91,6 +95,7 @@ def signup(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
         school = request.POST.get('school')
+        user_role = request.POST.get('userRole', 'student')
 
         user_data_has_error = False
 
@@ -125,7 +130,7 @@ def signup(request):
                 phone=phone,
                 email=email,
                 password=password,
-                role='student',
+                role=user_role,
                 school=school,
 
             )

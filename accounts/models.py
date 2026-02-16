@@ -46,7 +46,7 @@ class User(AbstractUser):
         ('KNUST', 'Kwame Nkrumah University of Science and Technology'),
         ('UPSA ', 'University of Professional Studies Accra'),
     ]
-    school = models.CharField(max_length=50, choices=SCHOOLS, default='none')
+    school = models.CharField(max_length=50, choices=SCHOOLS, blank=True, null=True)
 
 
     USERNAME_FIELD = 'email'
@@ -56,14 +56,14 @@ class User(AbstractUser):
 
 
     def __str__(self):
-        return f'{self.username} '
+        return f'{self.email} - {self.role}'
 
 
 class Manager(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name="hostels",
+        related_name="manager_profile",
     )
 
     whatsapp = models.CharField(max_length=13, blank=True)
@@ -71,10 +71,8 @@ class Manager(models.Model):
 
     # Use the same profile image from User model so we don't duplicate
     # or allow manager-specific override:
-    profile_pic = models.ImageField(upload_to='profiles/', blank=True, null=True)
-
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
 
 class PasswordReset(models.Model):
@@ -83,4 +81,4 @@ class PasswordReset(models.Model):
     created_when = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Password reset for {self.user.username} at {self.created_when}'
+        return f'Password reset for {self.user.email} at {self.created_when}'

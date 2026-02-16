@@ -1,16 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, Manager
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     model = User
 
-    # 🔥 List view
+    # List view
     list_display = ("email", "role", "is_staff", "is_active")
     list_filter = ("role", "is_staff", "is_active")
 
-    # 🚫 Use email instead of username everywhere
+    #  Use email instead of username everywhere
     ordering = ("email",)
     search_fields = ("email",)
 
@@ -48,3 +48,8 @@ class CustomUserAdmin(UserAdmin):
             ),
         }),
     )
+
+@admin.register(Manager)
+class ManagerAdmin(admin.ModelAdmin):
+    list_display = ("user", "whatsapp", "address")
+    search_fields = ("user__email", "whatsapp")
